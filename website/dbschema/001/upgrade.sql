@@ -1,0 +1,12 @@
+
+CREATE DATABASE HomeSense;
+
+USE HomeSense;
+
+
+CREATE TABLE Version (
+   verID varchar(255) NOT NULL DEFAULT '',
+   verStamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   verInfo text NOT NULL,
+  PRIMARY KEY (verID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
