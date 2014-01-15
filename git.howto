@@ -1,0 +1,35 @@
+Steps for using git in windows
+
+
+== 
+Install cygwin (http://cygwin.com/install.html)
+
+
+==
+Configure git
+
+git config --list
+git config --global user.name "your name"
+git config --global user.email
+
+
+==
+Get a copy of the files
+
+git clone https://github.com/jorgep19/softwareEng.git
+
+
+==
+Steps for addinga file 
+
+create a file
+git status
+git add path_to_file
+
+
+== Store the changes locally
+git commit
+
+== Send the changes to the server (to make them visible to everybody)
+git push
+
