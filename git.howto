@@ -10,11 +10,11 @@ Configure git
 
 git config --list
 git config --global user.name "your name"
-git config --global user.email
+git config --global user.email "your email"
 
 
 ==
-Get a copy of the files
+Get a copy of the files over https (may not always work)
 
 git clone https://github.com/jorgep19/softwareEng.git
 
@@ -33,3 +33,24 @@ git commit
 == Send the changes to the server (to make them visible to everybody)
 git push
 
+
+
+==== Problems with getting a clone from github ===
+
+Solution: create an ssh key on the server you are trying to access github from
+
+1 cd ~/.ssh
+2 ls 
+-- if the folder does not contain files like 'id_rsa  id_rsa.pub' then you create new keys
+3 ssh-keygen -t rsa -C "your_email@example.com"
+4 enter a passphrase
+5 less ~/.ssh/id_rsa.pub
+6 -- copy the content of this public key file to the page https://github.com/settings/ssh
+7 git clone git@github.com:jorgep19/softwareEng.git
+
+
+-- you should get something like 
+...
+Receiving objects: 100% ...
+Resolving deltas: 100% ...
+ 
