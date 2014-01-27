@@ -1,0 +1,75 @@
+
+Testing the DS18B20 temperature sensor
+==================
+
+We assume that the Raspberry Pi device was properly installed
+with an SD-card, power adapter and an ethernet cable.
+
+Wire the temeperature sensor as follows: 
+
+    -----------
+   /  DS18B20  \
+  /GND  DQ  VDD \
+ /               \
+/   1    2    3   \
+ -----------------
+   |    |    |
+   |    |    +---+
+   |    |        |
+   |    |  4.7K  |
+   |    +--#####-+
+   |    |        | 
+======================
+#  6    7        1   #
+# GND  GPIO4    3V3  #
+#                    #
+#  Raspberry Pi v2   #
+#                    #
+======================
+
+
+Now using an ssh client:
+
+$ ssh pi@192.168.1.8       // use your own IP
+$ cd /sys/bus && ls        // list the folder to check if there are any `w1` devices
+
+
+
+$ sudo modprobe w1-gpio    // load the module for 1-Wire Protocol devices
+$ sudo modprobe w1-therm   // load the module for the temperature sensor
+$ ls -1                    // you should see a directory like 28-xyz if the sensor was wired properly
+
+28-0000056770f5
+w1_bus_master1
+  
+$ cd 28-0000056770f5
+$ ls -1
+
+driver
+id
+name
+power
+subsystem
+uevent
+w1_slave   // this is the file updated every sencond with temperature readings 
+
+
+
+$ cat w1_slave
+5e 01 4b 46 7f ff 02 10 8d : crc=8d YES      // `Yes` means that the temperaure was read properly
+5e 01 4b 46 7f ff 02 10 8d t=21875           // the value after `t=` is the temperature in Celsius * 1000
+
+
+// Now we are ready to read the temperature continuously
+$ for i in {1..100}; do cat w1_slave  | grep t | cut -b30-; done
+
+21875
+22125
+23187
+23250
+23187
+23125
+...
+
+// You can see the temperature increase if you touch the sensor with your fingers.
+
