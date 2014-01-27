@@ -11,7 +11,7 @@ Arango, Lucas     @
 
 Childers, Brice   @
 
-Holtzman, Shaun   @
+Holtzman, Shaun   ShaunHoltzman@Gmail.com
 
 Mayo, Armand      @
 
