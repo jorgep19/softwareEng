@@ -46,7 +46,7 @@ CREATE TABLE Customer (
    cusDateRegistered datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
    cusDateModified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  PRIMARY KEY (cusID),
- KEY (cusEmail),
+ UNIQUE KEY (cusEmail),
  KEY (cusFirst, cusLast),
  KEY (cusDateRegistered),
  KEY (cusDateModified),
@@ -81,7 +81,7 @@ CREATE TABLE CustomerRasPi (
    crpDateAdded datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
  PRIMARY KEY (crpID),
  KEY (cusID),
- KEY (crpDescription),
+ UNIQUE KEY (crpDescription),
  KEY (crpDateAdded),
  CONSTRAINT `fk_CustomerRasPi_cusID` FOREIGN KEY (cusID) REFERENCES Customer (cusID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -93,7 +93,7 @@ CREATE TABLE SensorType (
    sentDescription varchar(255),
    sentDateAdded datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
  PRIMARY KEY (sentID),
- KEY (sentDescription),
+ UNIQUE KEY (sentDescription),
  KEY (sentDateAdded)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -103,13 +103,14 @@ CREATE TABLE RasPiSensor (
    raspsID integer unsigned NOT NULL AUTO_INCREMENT,
    crpID integer unsigned NOT NULL,
    sentID smallint unsigned NOT NULL,
+   raspsDescription varchar(255) NOT NULL,
  PRIMARY KEY(raspsID),
  KEY (crpID),
  KEY (sentID),
+ UNIQUE KEY(crpID, sentID, raspsDescription),
  CONSTRAINT `fk_RasPiSensor_crpID` FOREIGN KEY (crpID) REFERENCES CustomerRasPi (crpID),
  CONSTRAINT `fk_RasPiSensor_sentID` FOREIGN KEY (sentID) REFERENCES SensorType (sentID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 
 -- stores various values from different sensor types
 CREATE TABLE RasPiSensorData (

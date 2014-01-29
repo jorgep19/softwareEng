@@ -83,13 +83,14 @@ desc SensorType;
 
 
 desc RasPiSensor;
-+---------+----------------------+------+-----+---------+----------------+
-| Field   | Type                 | Null | Key | Default | Extra          |
-+---------+----------------------+------+-----+---------+----------------+
-| raspsID | int(10) unsigned     | NO   | PRI | NULL    | auto_increment |
-| crpID   | int(10) unsigned     | NO   | MUL | NULL    |                |
-| sentID  | smallint(5) unsigned | NO   | MUL | NULL    |                |
-+---------+----------------------+------+-----+---------+----------------+
++------------------+----------------------+------+-----+---------+----------------+
+| Field            | Type                 | Null | Key | Default | Extra          |
++------------------+----------------------+------+-----+---------+----------------+
+| raspsID          | int(10) unsigned     | NO   | PRI | NULL    | auto_increment |
+| crpID            | int(10) unsigned     | NO   | MUL | NULL    |                |
+| sentID           | smallint(5) unsigned | NO   | MUL | NULL    |                |
+| raspsDescription | varchar(255)         | NO   |     | NULL    |                |
++------------------+----------------------+------+-----+---------+----------------+
 
 
 desc RasPiSensorData;
@@ -102,4 +103,74 @@ desc RasPiSensorData;
 | raspsdDateAdded | datetime         | NO   | MUL | 0000-00-00 00:00:00 |                |
 +-----------------+------------------+------+-----+---------------------+----------------+
 
+
+============= Examples of data inserted 
+
+SELECT * FROM CustomerType;
++---------+-----------+
+| ctypeID | ctypeType |
++---------+-----------+
+|       2 | Business  |
+|       1 | Person    |
++---------+-----------+
+
+SELECT * FROM CustomerRegistrationMode;
++-------+-----------+
+| crmID | crmMode   |
++-------+-----------+
+|     2 | MobileApp |
+|     1 | Online    |
++-------+-----------+
+
+SELECT * FROM SensorType;
++--------+-----------------+---------------------+
+| sentID | sentDescription | sentDateAdded       |
++--------+-----------------+---------------------+
+|      1 | Temperature     | 2014-01-29 14:07:46 |
+|      2 | Motion          | 2014-01-29 14:07:46 |
+|      3 | Luminosity      | 2014-01-29 14:07:46 |
++--------+-----------------+---------------------+
+
+
+-- show all sensor for a user RasPi device
+SELECT
+	cusID, raspsID, cusEmail, cusDateRegistered, crpDescription, sentDescription, raspsDescription
+FROM
+	Customer
+	NATURAL JOIN CustomerRasPi
+	NATURAL JOIN RasPiSensor
+	NATURAL JOIN SensorType
+WHERE
+	cusEmail = 'indera@gmail.com'
+	AND crpDescription = 'My first RasPi device';
++-------+---------+------------------+---------------------+-----------------------+-----------------+------------------+
+| cusID | raspsID | cusEmail         | cusDateRegistered   | crpDescription        | sentDescription | raspsDescription |
++-------+---------+------------------+---------------------+-----------------------+-----------------+------------------+
+|     1 |       1 | indera@gmail.com | 2014-01-29 14:07:46 | My first RasPi device | Temperature     | TempSens1        |
+|     1 |       2 | indera@gmail.com | 2014-01-29 14:07:46 | My first RasPi device | Motion          | MotionAlarm      |
++-------+---------+------------------+---------------------+-----------------------+-----------------+------------------+
+
+
+-- show all data recorded for a sensor for a specific RasPi of a specific customer
+SELECT
+	cusID, raspsID, cusEmail, crpDescription, raspsDescription, raspsdValue, raspsdDateAdded
+FROM
+	Customer
+	NATURAL JOIN CustomerRasPi
+	NATURAL JOIN RasPiSensor
+	NATURAL JOIN SensorType
+	NATURAL JOIN RasPiSensorData
+WHERE
+	cusEmail = 'indera@gmail.com'
+	AND crpDescription = 'My first RasPi device';
+	AND raspsDescription = 'TempSens1'
+;
+
++-------+---------+------------------+-----------------------+------------------+-------------+---------------------+
+| cusID | raspsID | cusEmail         | crpDescription        | raspsDescription | raspsdValue | raspsdDateAdded     |
++-------+---------+------------------+-----------------------+------------------+-------------+---------------------+
+|     1 |       1 | indera@gmail.com | My first RasPi device | TempSens1        | 41          | 2014-01-29 14:07:46 |
+|     1 |       1 | indera@gmail.com | My first RasPi device | TempSens1        | 46          | 2014-01-29 14:07:46 |
+|     1 |       1 | indera@gmail.com | My first RasPi device | TempSens1        | 48          | 2014-01-29 14:07:46 |
++-------+---------+------------------+-----------------------+------------------+-------------+---------------------+
 
