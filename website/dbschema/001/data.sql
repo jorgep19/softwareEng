@@ -34,6 +34,15 @@ FROM
 	CustomerType, CustomerRegistrationMode WHERE ctypeType = 'Business' AND crmMode = 'Online';
  
 --  @TODO Adding Passwords
+INSERT INTO CustomerPassword
+   (cusID, cuspPassword)
+SELECT
+   cusID, sha1(aes_encrypt('pass', 'pass'))
+FROM
+   Customer
+WHERE
+   cusEmail = 'indera@gmail.com'
+;
 
 
 -- Associating a customer with a RasPi device
@@ -113,3 +122,25 @@ WHERE
 	AND sentDescription = 'Temperature'
 	AND raspsDescription = 'TempSens1' 
 ;
+
+
+-- insert carriers 
+INSERT INTO PhoneCarrier
+   (pcName, pcEmailToSmsUrl, pcDateAdded) 
+VALUES
+   ('att', 'txt.att.net', NOW()), 
+   ('verizon', 'vtext.com', NOW()), 
+   ('tmobile', 'tmomail.net', NOW())
+; 
+
+
+INSERT INTO PhoneNumber (cusID, pcID, phnNumber)
+SELECT
+   cusID, pcID, '3523281445' 
+FROM
+   Customer, PhoneCarrier
+WHERE
+   cusEmail = 'indera@gmail.com'
+   AND pcName = 'att'
+;
+

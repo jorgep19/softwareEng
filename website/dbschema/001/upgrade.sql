@@ -63,7 +63,7 @@ CREATE TABLE CustomerPassword (
    cusID integer unsigned NOT NULL,
    cuspPassword varchar(255) NOT NULL DEFAULT '',
    cuspDateModified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-   cuspResetKey varchar(255) NOT NULL DEFAULT '',
+   cuspResetKey varchar(255),
    cuspDateResetKeyExpires datetime,
  PRIMARY KEY(cuspID),
  KEY (cusID),
@@ -126,3 +126,29 @@ CREATE TABLE RasPiSensorData (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+-- stores PhoneCarrier types
+CREATE TABLE PhoneCarrier (
+   pcID smallint unsigned NOT NULL AUTO_INCREMENT,
+   pcName varchar(255) NOT NULL,
+   pcEmailToSmsUrl varchar(255),
+   pcDateAdded datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+ PRIMARY KEY(pcID),
+ UNIQUE KEY(pcName)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- stores customer phone numbers
+CREATE TABLE PhoneNumber (
+   phnID integer unsigned NOT NULL AUTO_INCREMENT,
+   cusID integer unsigned NOT NULL,
+   pcID smallint unsigned NOT NULL,
+   phnNumber varchar(255) NOT NULL,
+ PRIMARY KEY(phnID),
+ KEY(cusID),
+ KEY(pcID),
+ KEY(phnNumber), 
+ CONSTRAINT `fk_PhoneNumber_cusID` FOREIGN KEY (cusID) REFERENCES Customer (cusID),
+ CONSTRAINT `fk_PhoneNumber_pcID` FOREIGN KEY (pcID) REFERENCES PhoneCarrier (pcID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+ 
