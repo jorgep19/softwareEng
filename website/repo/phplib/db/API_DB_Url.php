@@ -5,6 +5,8 @@
 *  @author Andrei Sura
 */
 class API_DB_Url {
+   private $url;
+
    private $user;
    private $pass;
 
@@ -14,9 +16,13 @@ class API_DB_Url {
 
    // split the URL: 
    public function __construct($url) {
+
+// echo "\n<br /> construct: $url";
+      $this->url = $url;
+
       $parts = parse_url($url);
 
-      if (isset($parts['user']) {
+      if (isset($parts['user'])) {
          $this->user = urldecode($parts['user']);
       }
       if (isset($parts['pass'])) {
@@ -34,6 +40,10 @@ class API_DB_Url {
       if (isset($parts['path']) && strlen($parts['path'])) {
          $this->dbname = substr($parts['path'], 1);
       }
+   }
+
+   public function getUrl() {
+      return $this->url;
    }
 
    public function getUser() {

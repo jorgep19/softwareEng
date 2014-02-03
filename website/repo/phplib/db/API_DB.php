@@ -5,50 +5,55 @@
 *  @author Andrei Sura
 */
 
-// abstract class API_DB
-interface API_DB {
+abstract class API_DB {
 
    /**
    *  Select a database
    *
    *  @throw API_DB_Exception
    */
-   function useDB($dbName);
+   abstract function useDB($dbName);
 
    /**
    *  Sanitize the query to prevent SQL-injections
    *  @return API_DB_Statement object
    */
-   function prepare($queryString);
+   abstract function prepare($queryString);
 
    /**
    *  Execute a prepared statement
    */
-   function query(API_DB_Statement $ps);
+   //abstract function query(API_DB_Statement $ps);
+   abstract function query($ps);
 
    /**
    *  @return the id of the row inserted 
    */
-   function lastInsertId();
+   abstract function lastInsertId();
 
    /**
    *  Sanitize a string
    */
-   function quoteString($str);
+   abstract function quoteString($str);
 
-   function beginTransaction();
-   function commit();
-   function rollBack();
+   abstract function beginTransaction();
+   abstract function commit();
+   abstract function rollBack();
 
-   function close();
-   function __sleep();
+   abstract function close();
+   abstract function __sleep();
 
 
    // Can be used to add support for other database types 
    public static function connect($url) {
       $schema = parse_url($url, PHP_URL_SCHEME);
+      // echo "<br /> schema: $schema";
 
-      if ('maria' == $schema) {
+
+      if ('mysql' == $schema) {
+         require_once 'phplib/db/maria/API_DB_Maria.php';
+         require_once 'phplib/db/maria/API_DB_Statement_Maria.php';
+         require_once 'phplib/db/maria/API_DB_Result_Maria.php';
          return new API_DB_Maria($url);
       }
       // else if ('other' == $schema) { return new API_DB_Other($url)}
@@ -65,10 +70,10 @@ interface API_DB {
       $schema = NULL,
       $port = NULL,
       $dbname = NULL,
-     $params = NULL) {
+      $params = NULL) {
       
       if (! isset($schema)) {
-         $schema = 'maria';
+         $schema = 'mysql';
       }
       
       $url = $schema . '://';

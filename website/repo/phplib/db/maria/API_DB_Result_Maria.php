@@ -4,11 +4,11 @@
 *
 *  @author Andrei Sura
 */
-public class API_DB_Result_Maria implements API_DB_Result {
+class API_DB_Result_Maria implements API_DB_Result {
    private $rs;
 
    // Construct a `result` object instance from the PDOStatement
-   public function __construct(PDOStatement $ps) {
+   public function __construct(PDOStatement $rs) {
       $this->rs = $rs;
    }
 

@@ -19,6 +19,8 @@ class HsApp {
    }
 
    public function run() {
-      echo "\n run run";
+      echo "\n <br /> run app \n";
+
+      require_once 'phplib/db/unittest/test_API_DB.php';
    }
 }

@@ -5,11 +5,7 @@
 *  @author Andrei Sura 
 */
 
-require_once 'phplib/HomeSense/common.php';
-require_once 'phplib/HomeSense/DbDao.php';
+require_once 'phplib/common.php'; // adds the phplib to the path
+require_once 'phplib/HomeSense/HsApp.php';
 
-
-DbDao::getDbVersion();
-
-
-
+HsApp::getInstance()->run();

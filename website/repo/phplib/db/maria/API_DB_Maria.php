@@ -1,16 +1,26 @@
 <?php
 /**
-*  Implementation of API_DB for Maria.
+*  Implementation of API_DB for mariadb (mysql).
 *
 *  From: http://www.php.net/manual/en/intro.pdo.php
 *     "The PHP Data Objects (PDO) extension defines a lightweight,
 *      consistent interface for accessing databases in PHP."
 *
+
+php -r 'phpinfo();'  | grep 'driver'
+   PDO drivers => sqlite, mysql
+
+php -r 'phpinfo();'  | grep 'Client API'
+   Client API version => 5.5.34-MariaDB
+   Client API library version => 5.5.34-MariaDB
+   Client API header version => 5.5.34-MariaDB
+   Client API version => mysqlnd 5.0.10 - 20111026
+
+*
 *  @author Andrei Sura  
 */
 
-// class API_DB_Maria extends API_DB {
-class API_DB_Maria implements API_DB {
+class API_DB_Maria extends API_DB {
    // instance of a PDO object
    private $pdo;
 
@@ -23,11 +33,11 @@ class API_DB_Maria implements API_DB {
    *  Called from API_DB.php#connect()
    */
    public function __construct($urlString) {
-
-      $url = API_DB::createDbUrl($urlString);
+      $url = new API_DB_Url($urlString);
 
       try {
-         $this->pdo = new PDO("maria:".$url->getParams(), $url->getUser(), $url->getPass());
+         // $this->pdo = new PDO("mariadb:".$url->getParams(), $url->getUser(), $url->getPass());
+         $this->pdo = new PDO("mysql:".$url->getParams(), $url->getUser(), $url->getPass());
          $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
          $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       }
@@ -38,7 +48,8 @@ class API_DB_Maria implements API_DB {
 
    public function useDB($dbName) {
       try {
-         $this->prepare('USE ?')->execute($dbName);
+         $this->query("USE $dbName");
+         // $this->prepare("USE $dbName")->execute();
       }
       catch (Exception $pdoe) {
          API_DB_Exception::handle($pdoe);
@@ -63,7 +74,7 @@ class API_DB_Maria implements API_DB {
    *  Wrap the PDO result into a API_DB_Result_Maria
    *  @see PDO::query()
    */
-   public function query(API_DB_Statement $ps) {
+   public function query($ps) {
       try {
          // Note: $rs is an instance of PDOStatement 
          $rs = $this->pdo->query($ps);
