@@ -52,7 +52,7 @@ class UNIT_API_DB {
 
       $query = <<<SQL
 SELECT
-	cusID, raspsID, cusEmail, crpDescription, raspsDescription, raspsdValue, raspsdDateAdded
+   raspsdID, cusID, raspsID, cusEmail, crpDescription, raspsDescription, raspsdValue, raspsdDateAdded
 FROM
 	Customer
 	NATURAL JOIN CustomerRasPi
@@ -61,7 +61,7 @@ FROM
 	NATURAL JOIN RasPiSensorData
 WHERE
 	cusEmail = 'indera@gmail.com'
-	AND crpDescription = 'My first RasPi device';
+	AND crpDescription = 'My first RasPi device'
 	AND raspsDescription = 'TempSens1'
    AND raspsdDateAdded LIKE ?
 SQL;
@@ -69,14 +69,18 @@ SQL;
       echo "\n<!-- <pre> query: $query</pre> -->";
       $this->con->useDB('abovotec_home');
       $ps = $this->con->prepare($query);
-      $result = $ps->execute('2014-01-29%');
+
+      $date = isset($_GET['date']) ? $_GET['date'] : '2014-01-29';
+echo $date;
+
+      $result = $ps->execute("$date%");
 
       if (! $result) {
          echo "<br /> Query failed: $query";
          return;
       }
 
-      echo <<<HTML
+      $html = <<<HTML
 <table border="1">
 <caption> Sample data retrieved from the database </caption>
 <thead>
@@ -88,8 +92,13 @@ SQL;
 </thead>
 HTML;
 
+
+      $list = array();
       while ($row = $result->fetch()) {
-         echo <<<HTML
+         $id =  $row['raspsdID'];
+         $list[$id] = $row;
+
+         $html .= <<<HTML
 <tr>
 <td> {$row['crpDescription']} 
 <td> {$row['raspsDescription']}
@@ -97,9 +106,13 @@ HTML;
 </tr>
 HTML;
       }
-      echo <<<HTML
+      $html .=<<<HTML
 </table>
 HTML;
+
+      echo $html;
+      echo "<hr /> JSON encoded data <br />";
+      echo json_encode($list);
    }
 }
 

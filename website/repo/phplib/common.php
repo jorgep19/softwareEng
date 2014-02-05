@@ -16,5 +16,4 @@ require_once 'db/API_DB_Exception.php';
 
 require_once 'HomeSense/setup_session.php';
 require_once 'HomeSense/DbDao.php';
-// echo "\npath:" . get_include_path();
 
