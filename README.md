@@ -7,7 +7,7 @@ Software Engineering project
 Contact Info - please add your email
 ============
 
-Arango, Lucas     @
+Arango, Lucas     aranlucas@gmail.com
 
 Childers, Brice   @
 
