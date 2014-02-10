@@ -1,44 +1,23 @@
 # Copyright (c) 2012 Matthew Kirk
 # Licensed under MIT License, see 
 # http://www.cl.cam.ac.uk/freshers/raspberrypi/tutorials/temperature/LICENSE
-
-import RPi.GPIO as GPIO
+# sudo apt-get install python-rpi.gpio
 import time
-
-LED1_GPIO_PIN = 18
-LED2_GPIO_PIN = 25
-BUTTON_GPIO_PIN = 17
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(BUTTON_GPIO_PIN, GPIO.IN)
-GPIO.setup(LED1_GPIO_PIN, GPIO.OUT)
-GPIO.setup(LED2_GPIO_PIN, GPIO.OUT)
-
-GPIO.output(LED1_GPIO_PIN, GPIO.HIGH)
-
-while True:
-	if GPIO.input(BUTTON_GPIO_PIN):
-		break
-
-while GPIO.input(BUTTON_GPIO_PIN):
-	pass
-
-GPIO.output(LED1_GPIO_PIN, GPIO.LOW)
-GPIO.output(LED2_GPIO_PIN, GPIO.HIGH)
+import json
 
 timestamp = time.strftime("%Y-%m-%d-%H-%M-%S")
-filename = "".join(["temperaturedata", timestamp, ".log"])
-datafile = open(filename, "w", 1)
 
-while True:
-	tfile = open("/sys/bus/w1/devices/10-000802824e58/w1_slave")
-	text = tfile.read()
-	tfile.close()
-	temperature_data = text.split()[-1]
-	temperature = float(temperature_data[2:])
-	temperature = temperature / 1000
-	datafile.write(str(temperature) + "\n")
-	if GPIO.input(BUTTON_GPIO_PIN):
-		break
+tfile = open("/sys/bus/w1/devices/10-000802824e58/w1_slave")
+text = tfile.read()
+tfile.close()
+temperature_data = text.split()[-1]
+temperature = float(temperature_data[2:])
+temperature = temperature / 1000
 
-datafile.close()
-GPIO.output(LED2_GPIO_PIN, GPIO.LOW)
+jdata= json.dumps({"4":{"raspsdID":"4","cusID":"1","raspsID":"1","cusEmail":"indera@gmail.com","raspsDescription":"TempSens1","raspsdValue":temperature,"raspsdDateAdded":timestamp}})
+
+urllib2.urlopen("http://www.example.com/", jdata)
+
+print jdata
+
+print temperature
