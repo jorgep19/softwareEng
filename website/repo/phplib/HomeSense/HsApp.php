@@ -24,7 +24,7 @@ class HsApp {
       self::MOD_SENSOR,
    );
 
- 
+   private $conn; 
    static $instance;
 
    public static function getInstance() {
@@ -32,6 +32,28 @@ class HsApp {
          self::$instance = new HsApp();
       }
       return self::$instance;
+   }
+
+   private function __construct() {
+      $this->setupConnection();      
+   }
+
+   private function setupConnection() {
+      $urlObj = API_DB::createDbUrl(
+         $_SERVER['HS_DB_HOST'],
+         $_SERVER['HS_DB_USER'],
+         $_SERVER['HS_DB_PASS']);
+
+      $url = $urlObj->getUrl();
+      $this->conn = API_DB::connect($url);
+      $this->conn->useDB('abovotec_home');
+   }
+
+   /**
+   *  Accessor for database connection attribute
+   */ 
+   public function getConn() {
+      return $this->conn;
    }
 
    /**
@@ -65,16 +87,18 @@ class HsApp {
 
          $module = NULL;
 
+         $action = $parts[1];
+
          // require the user to provide an action if module is specified
          switch($parts[0]) {
             case self::MOD_CUSTOMER :
-               $module = new CustomerModule();
+               $module = new CustomerModule($action);
                break;
             case self::MOD_DEVICE :
-               $module = new DeviceModule();
+               $module = new DeviceModule($action);
                break;
          case self::MOD_SENSOR:
-               $module = new SensorModule();
+               $module = new SensorModule($action);
                break;
     
          }
@@ -88,7 +112,7 @@ class HsApp {
          }
 
          // @TODO: add error checking
-         return json_encode($module->run());
+         echo json_encode($module->run());
       }
 
    }
