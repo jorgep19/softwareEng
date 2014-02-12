@@ -66,7 +66,8 @@ WHERE
    AND raspsdDateAdded LIKE ?
 SQL;
 
-      echo "\n<!-- <pre> query: $query</pre> -->";
+      // echo "\n<!-- <pre> query: $query</pre> -->";
+      echo "<pre> query: $query</pre>";
       $this->con->useDB('abovotec_home');
       $ps = $this->con->prepare($query);
 

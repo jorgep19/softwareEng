@@ -5,6 +5,10 @@
 *  @author Andrei Sura 
 */
 
+require_once 'HomeSense/Modules/CustomerModule.php';
+require_once 'HomeSense/Modules/DeviceModule.php';
+require_once 'HomeSense/Modules/SensorModule.php';
+// echo 'path:' . get_include_path();
 
 class HsApp {
 
@@ -36,7 +40,7 @@ class HsApp {
    *  @TODO: decide if we need to use `setup_session.php` 
    */
    public function authorize() {
-
+      echo "\n<br /> run authorize()";
    }
 
    /**
@@ -46,7 +50,7 @@ class HsApp {
    public function route() {
       $parts = explode('/', $_SERVER['REQUEST_URI']);
       array_shift($parts);
-      print_r($parts);
+      // print_r($parts);
 
       // Valid modules:
       //    customer => register, change_pass, add_device
@@ -64,16 +68,27 @@ class HsApp {
          // require the user to provide an action if module is specified
          switch($parts[0]) {
             case self::MOD_CUSTOMER :
-               $mod = new CustomerModule();
+               $module = new CustomerModule();
                break;
             case self::MOD_DEVICE :
-               $mod = new DeviceModule();
+               $module = new DeviceModule();
                break;
+         case self::MOD_SENSOR:
+               $module = new SensorModule();
+               break;
+    
          }
+         if (! $module) {
+            die('Error: internal error');
+         }
+
          $errors = $module->validateAction();
          if (count($errors)) {
             die('Error: invalid module action.');
          }
+
+         // @TODO: add error checking
+         return json_encode($module->run());
       }
 
    }
