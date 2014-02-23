@@ -15,7 +15,7 @@ Holtzman, Shaun   ShaunHoltzman@Gmail.com
 
 Mayo, Armand      @
 
-Moran, James      @
+Moran, James      jmoran1028@gmail.com
 
 Obregon, Alvaro   @
 
