@@ -15,13 +15,13 @@
 
                 <div class="navbar-form navbar-right">
                     <div class="form-group">
-                        <input type="text" placeholder="username or email">
+                        <input type="text" placeholder="username or email" data-bind="value: userName">
                     </div>
                     <div class="form-group">
-                        <input type="text" placeholder="password">
+                        <input type="password" placeholder="password" data-bind="value: password">
                     </div>
                     <!--type="submit" -->
-                    <a href="pages/dashboard.html"><button class="btn btn-default">Login</button></a>
+                    <button class="btn btn-default" data-bind="click: doLogin">Login</button>
                 </div>
             </header>
 
@@ -71,5 +71,8 @@
                 &copy; HomeSense 2014
             </footer>
         </main>
+
+        <script src="./lib/js/knockout-3.js"></script>
+        <script src="./clientLogic/HomePageVM.js"></script>
     </body>
 </html>
