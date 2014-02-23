@@ -21,13 +21,13 @@ function generateChartData() {
 }
 
 // create chart
-Amcharts.ready(function() {
+AmCharts.ready(function() {
     // generate some data first
     generateChartData();
 
     // SERIAL CHART    
-    chart = new Amcharts.HSSerialChart();
-    chart.pathToImages = "http://www.amcharts.com/lib/images/";
+    chart = new AmCharts.HSSerialChart();
+    chart.pathToImages = "http://www.AmCharts.com/lib/images/";
     chart.marginTop = 0;
     chart.marginRight = 10;
     chart.autoMarginOffset = 5;
@@ -48,13 +48,13 @@ Amcharts.ready(function() {
     categoryAxis.axisColor = "#DADADA";
 
     // value                
-    var valueAxis = new Amcharts.ValueAxis();
+    var valueAxis = new AmCharts.ValueAxis();
     valueAxis.axisAlpha = 0.2;
     valueAxis.dashLength = 1;
     chart.addValueAxis(valueAxis);
 
     // GRAPH
-    var graph = new Amcharts.HSGraph();
+    var graph = new AmCharts.HSGraph();
     graph.title = "red line";
     graph.valueField = "visits";
     graph.bullet = "round";
@@ -67,12 +67,12 @@ Amcharts.ready(function() {
     chart.addGraph(graph);
 
     // CURSOR
-    chartCursor = new Amcharts.ChartCursor();
+    chartCursor = new AmCharts.ChartCursor();
     chartCursor.cursorPosition = "mouse";
     chart.addChartCursor(chartCursor);
 
     // SCROLLBAR
-    var chartScrollbar = new Amcharts.ChartScrollbar();
+    var chartScrollbar = new AmCharts.ChartScrollbar();
     chartScrollbar.graph = graph;
     chartScrollbar.scrollbarHeight = 40;
     chartScrollbar.color = "#FFFFFF";
