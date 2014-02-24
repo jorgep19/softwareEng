@@ -3,6 +3,13 @@ softwareEng
 
 Software Engineering project
 
+API URLs
+======
+
+* Read Data http://homesense.abovotec.com/api/sensor/get_sensor_data/?email=indera@gmail.com&pass=pass&device=RasPi_Garage&sensor=TempSens1
+* Insert Data http://homesense.abovotec.com/api/sensor/put_data/?value=10&date=2014-02-23&email=indera@gmail.com&device=RasPi_Garage&sensor=TempSens1
+* Insert User http://homesense.abovotec.com/api/customer/register?cusEmail=some@domain.com&cusFrist=x&cusLast=y&cusMI=z
+
 
 Contact Info - please add your email
 ============
@@ -24,20 +31,4 @@ Paez, Jorge L     @
 Saint-Cyr, Job    @
 
 Sura, Andrei      indera@gmail.com
-
-
-
-Example of requests
-
-Customer register:
-
-* http://homesense.abovotec.com/customer/register?cusEmail=some@domain.com&cusFrist=x&cusLast=y&cusMI=z
-
-Sensor read data for a date:
-
-* http://homesense.abovotec.com/sensor/get_data/?date=2014-02-12
-
-Sensor insert value:
-
-* http://homesense.abovotec.com/sensor/put_data/?val=1
 
