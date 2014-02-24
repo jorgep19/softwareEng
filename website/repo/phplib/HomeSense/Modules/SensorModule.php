@@ -11,7 +11,7 @@ class SensorModule {
    public $action;
 
    public function __construct($action) {
-      echo "\n<br /> call constr SensorModule";
+      //echo "\n<br /> call constr SensorModule";
       $this->conn = HsApp::getInstance()->getConn();
       $this->action = $action;
    }
@@ -23,7 +23,7 @@ class SensorModule {
    public function validateAction() {
       $errors = array();
 
-      echo "\n <br /> call SensorModule::validateAction()";
+// echo "\n <br /> call SensorModule::validateAction()";
       return $errors;
 
    } 
@@ -34,7 +34,7 @@ class SensorModule {
    public function run() {
       $data = array();
 
-      echo "\n <br /> call SensorModule::run()";
+      //echo "\n <br /> call SensorModule::run()";
       // read/write the db...
 
       switch ($this->action) {
@@ -44,6 +44,10 @@ class SensorModule {
          case 'get_data':
             $data = $this->doGetData();
             break;
+         case 'get_sensor_data':
+            $data = $this->doGetSensorData();
+            break;
+ 
       }
       return $data;
    }
@@ -56,26 +60,60 @@ class SensorModule {
    public function doPutData() {
       $data = array();
 
-      $val = util::request('val', 0);
-      echo "\n <br /> doPutData(): value $val";
+//die('ha');
+      
+      $value   = util::request('value');
+      $date    = util::request('date');
+      $email   = util::request('email');
+      $device  = util::request('device');
+      $sensor = util::request('sensor');
+
+      // $obj = json_decode($json);
+
+      $errors = array();
+
+
+      if (! $value) {
+         $errors[] = 'No `value` specified';
+      }
+
+      if (! $date) {
+         $errors[] = 'No `date` specified';
+      }
+ 
+      if (! $email) {
+         $errors[] = 'No `email` specified';
+      }
+      if (! $device) {
+         $errors[] = 'No `device` specified';
+      }
+     
+      // echo "\n <br /> doPutData(): value $val";
       
 $query = <<<SQL
 INSERT INTO RasPiSensorData (raspsID, raspsdValue, raspsdDateAdded) 
 SELECT
-	raspsID, ?, NOW()
+	raspsID, ?, ?
 FROM
 	Customer
 	NATURAL JOIN CustomerRasPi
 	NATURAL JOIN RasPiSensor
 	NATURAL JOIN SensorType
 WHERE
-	cusEmail = 'indera@gmail.com'
-	AND crpDescription = 'My First RasPi device'
+	cusEmail = ?
+	AND crpDescription = ?
 	AND sentDescription = 'Temperature'
-	AND raspsDescription = 'TempSens1' 
+	AND raspsDescription = ? 
 SQL;
 
-      $result = $this->conn->prepare($query)->execute($val);
+      //echo $query;
+
+      $result = $this->conn->prepare($query)->execute(
+         $value, $date,
+         $email,  $device, $sensor);
+
+// print_r($result);
+
       if (! $result) {
          return array('error' => array("failed to insert: $val"));
       }
@@ -90,7 +128,7 @@ SQL;
    */
    public function doGetData() {
       $date = util::request('date', '2014-02-01');
-      echo "\n <br /> doGetData() date: $date <br />\n";
+//echo "\n <br /> doGetData() date: $date <br />\n";
       $query = <<<SQL
 SELECT
    raspsdID, cusID, raspsID, cusEmail, crpDescription, raspsDescription, raspsdValue, raspsdDateAdded
@@ -110,6 +148,87 @@ SQL;
       $ps = $this->conn->prepare($query);
 
       $result = $ps->execute("$date%");
+
+      $list = array();
+      while ($row = $result->fetch()) {
+         $id =  $row['raspsdID'];
+         $list[$id] = $row;
+      }
+
+      return $list;
+   }
+
+
+   /**
+   *  @see HsApp::authorizeRequest()
+   */
+   public function doGetSensorData() {
+      $app = HsApp::getInstance();
+      $errors = $app->authorizeRequest();
+
+      $email      = util::request('email');
+      $device     = util::request('device');
+      $sensor     = util::request('sensor'); 
+      $date1      = util::request('date1');
+      $date2      = util::request('date2');
+
+      if (! $device) {
+         $errors[] = 'No device specified';
+      }
+      if (! $sensor) {
+         $errors[] = 'No sensor specified';
+      }
+ 
+      if (count($errors)) {
+        return $errors; 
+      }
+
+
+      // no dates specified
+      $query1 = <<<SQL
+SELECT
+   raspsdID, cusID, raspsID, cusEmail, crpDescription, raspsDescription, raspsdValue, raspsdDateAdded
+FROM
+	Customer
+	NATURAL JOIN CustomerRasPi
+	NATURAL JOIN RasPiSensor
+	NATURAL JOIN SensorType
+	NATURAL JOIN RasPiSensorData
+WHERE
+	cusEmail = ?
+	AND crpDescription = ?
+	AND raspsDescription =  ?
+SQL;
+
+      $query2 = <<<SQL
+SELECT
+   raspsdID, cusID, raspsID, cusEmail, crpDescription, raspsDescription, raspsdValue, raspsdDateAdded
+FROM
+	Customer
+	NATURAL JOIN CustomerRasPi
+	NATURAL JOIN RasPiSensor
+	NATURAL JOIN SensorType
+	NATURAL JOIN RasPiSensorData
+WHERE
+	cusEmail = ?
+	AND crpDescription = ?
+	AND raspsDescription =  ?
+   AND raspsdDateAdded BETWEEN ? AND ?
+SQL;
+
+      if (! $date1 && ! $date2) {
+         $query = $query1;        
+// echo $query;
+
+         $ps = $this->conn->prepare($query);
+         $result = $ps->execute($email, $device, $sensor);
+      }
+      else if ($date1 && $date2) {
+         $query = $query2;
+// echo $query;
+         $ps = $this->conn->prepare($query);
+         $result = $ps->execute($email, $device, $sensor, $date1, $date2);
+      }
 
       $list = array();
       while ($row = $result->fetch()) {

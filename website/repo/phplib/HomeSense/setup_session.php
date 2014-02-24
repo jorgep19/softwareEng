@@ -6,5 +6,5 @@
 
 session_start();
 
-echo "\n session start\n";
+// echo "\n session start\n";
 

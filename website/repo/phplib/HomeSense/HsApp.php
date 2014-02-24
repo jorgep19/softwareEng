@@ -12,6 +12,9 @@ require_once 'HomeSense/Modules/SensorModule.php';
 
 class HsApp {
 
+   // how do we change the salt?
+   const PASS_SALT = 123;
+
    // constants used for module names
    const MOD_CUSTOMER   = 'customer';
    const MOD_DEVICE     = 'device';
@@ -56,13 +59,42 @@ class HsApp {
       return $this->conn;
    }
 
+
+   /**
+   *  This version of the function expects the parameters `email` + `pass` in the request
+   *  @see authorize()
+   */
+   public function authorizeRequest() {
+      $email      = util::request('email');
+      $pass       = util::request('pass');
+
+      $errors = array();
+      if (! $email) {
+         $errors[] = 'No email specified';
+      }
+      if (! $pass) {
+         $errors[] = 'No password specified';
+      }
+
+      if (! DbDao::customerExists($email)) {
+         $errors[] = 'No such customer email';
+      }
+
+      if (! DbDao::isValidAuth($email, $pass)) {
+         $errors[] = 'Invalid password specified';
+      }
+
+      return $errors;
+   }
+
    /**
    *  Handles the request authorization
    *
    *  @TODO: decide if we need to use `setup_session.php` 
    */
    public function authorize() {
-      echo "\n<br /> run authorize()";
+      // echo "\n<br /> run authorize()";
+      return true;
    }
 
    /**
@@ -72,7 +104,9 @@ class HsApp {
    public function route() {
       $parts = explode('/', $_SERVER['REQUEST_URI']);
       array_shift($parts);
-      // print_r($parts);
+      array_shift($parts);
+
+// print_r($parts);
 
       // Valid modules:
       //    customer => register, change_pass, add_device
