@@ -33,11 +33,9 @@ LoginVM.prototype.createAccount = function() {
 
     $.ajax({
         url: "http://homesense.abovotec.com/customer/register?cusEmail="+self.email()+"&cusFrist=x&cusLast=y&cusMI=z"
-    }).done(function( data ) {
-            if ( console && console.log ) {
-                console.log( "Sample of data:", data.slice( 0, 100 ) );
-            }
-        });
+    })
+    .fail(function() { alert("failed to register"); })
+    .done(function( data ) { alert("created your account :)"); });
 };
 
 ko.applyBindings(new LoginVM());
