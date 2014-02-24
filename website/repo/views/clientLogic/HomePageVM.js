@@ -12,7 +12,7 @@ function LoginVM() {
 LoginVM.prototype.doLogin = function(){
     var self = this;
 
-    window.location = "dashboard.html?e="+self.email();
+    window.location = "./pages/dashboard.html?e="+self.email();
 
     // send ajax to login URL
     // and go to pages/dashboard.html"
