@@ -2,7 +2,6 @@ import urllib.parse
 import urllib.request
 import time
 import json
-import random
 
 
 timestamp = time.strftime("%Y-%m-%d-%H-%M-%S")
@@ -22,4 +21,4 @@ while(i<20):
     req =urllib.request.Request("http://www.homesense.abovotec.com/api/sensor/put_data/?", binary_data)
     urllib.request.urlopen(req)
     i+=1
-    time.sleep(3) # delays for 5 seconds
+    time.sleep(3) # delays for 3 seconds
