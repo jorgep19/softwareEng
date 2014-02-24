@@ -18,7 +18,7 @@ while(i<20):
     jdata= {"email":"indera@gmail.com","sensor":"TempSens1","value":temp,"date":timestamp,"device":"RasPi_Garage"}
     data = urllib.parse.urlencode(jdata)
     binary_data = data.encode('ascii')
-    req =urllib.request.Request("http://www.homesense.abovotec.com/api/sensor/put_data/?", binary_data)
+    req =urllib.request.Request("http://www.homesense.abovotec.com/api.php/sensor/put_data/?", binary_data)
     urllib.request.urlopen(req)
     i+=1
     time.sleep(3) # delays for 3 seconds
