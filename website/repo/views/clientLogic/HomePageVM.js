@@ -12,6 +12,8 @@ function LoginVM() {
 LoginVM.prototype.doLogin = function(){
     var self = this;
 
+    window.location = "dashboard.html?e="+self.email();
+
     // send ajax to login URL
     // and go to pages/dashboard.html"
     /*$.get(
@@ -35,6 +37,7 @@ LoginVM.prototype.createAccount = function() {
     /*$.ajax({
         url: "http://homesense.abovotec.com/api/customer/register?cusEmail="+self.email()+"&cusFrist=x&cusLast=y&cusMI=z"
     })
+     http://homesense.abovotec.com/api/sensor/get_sensor_data/?email=indera@gmail.com&pass=pass&device=RasPi_Garage&sensor=TempSens1
     .fail(function() { alert("failed to register"); })
     .done(function( data ) { alert("created your account :)"); });*/
 
