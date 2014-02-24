@@ -6,6 +6,7 @@ function LoginVM() {
     self.email = ko.observable("");
     self.password = ko.observable("");
     self.passwordRetype = ko.observable("");
+    self.successFeedback = ko.observable(false);
 }
 
 LoginVM.prototype.doLogin = function(){
@@ -31,11 +32,15 @@ LoginVM.prototype.doLogin = function(){
 LoginVM.prototype.createAccount = function() {
     var self = this;
 
-    $.ajax({
-        url: "http://homesense.abovotec.com/customer/register?cusEmail="+self.email()+"&cusFrist=x&cusLast=y&cusMI=z"
+    /*$.ajax({
+        url: "http://homesense.abovotec.com/api/customer/register?cusEmail="+self.email()+"&cusFrist=x&cusLast=y&cusMI=z"
     })
     .fail(function() { alert("failed to register"); })
-    .done(function( data ) { alert("created your account :)"); });
+    .done(function( data ) { alert("created your account :)"); });*/
+
+    self.successFeedback(true);
+
+    setTimeout(function(){ window.location = "dashboard.html?e="+self.email(); }, 1000);
 };
 
 ko.applyBindings(new LoginVM());
