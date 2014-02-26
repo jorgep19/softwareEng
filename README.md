@@ -3,6 +3,16 @@ softwareEng
 
 Software Engineering project
 
+
+
+======
+ssh abovotec@abovotec.com
+RaspberrY315
+
+connect to the database: db_home
+
+
+
 API URLs
 ======
 
