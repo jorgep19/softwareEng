@@ -129,9 +129,13 @@ SQL;
    public function doGetData() {
       $date = util::request('date', '2014-02-01');
 //echo "\n <br /> doGetData() date: $date <br />\n";
-      $query = <<<SQL
+
+//SELECT
+//   raspsdID, cusID, raspsID, cusEmail, crpDescription, raspsDescription, raspsdValue, raspsdDateAdded
+ 
+ $query = <<<SQL
 SELECT
-   raspsdID, cusID, raspsID, cusEmail, crpDescription, raspsDescription, raspsdValue, raspsdDateAdded
+  raspsdValue, raspsdDateAdded
 FROM
 	Customer
 	NATURAL JOIN CustomerRasPi
