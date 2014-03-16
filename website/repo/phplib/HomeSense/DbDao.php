@@ -28,4 +28,15 @@ class DbDao {
       return $version;
    }
 
+   public static function customerExists($email) {
+      return true;
+
+   }
+
+
+   public static function isValidAuth($email, $pass) {
+      return true;
+
+   }
+
 }
