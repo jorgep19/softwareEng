@@ -1,17 +1,16 @@
 import urllib.parse
 import urllib.request
 import json
+from update import updateSensors
 
-url= "http://www.homesense.abovotec.com/api.php/sensor/get_user/?"
+url= "http://api.transloc.com/1.2/arrival-estimates.json?agencies=116"
 input = input("Enter code from website: ");
-url+=input
+#url+=input
 
-#data= urllib.request.urlopen(url)
+user_data= urllib.request.urlopen(url)
+user= json.loads(user_data.readall().decode('utf-8'))
 
-f = open('user.txt', 'w')
-f.write("aranlucas@gmail.com\n")
-f.write("TempSens1\n")
-f.write("RasPi_Garage\n")
+with open('user.json', 'w') as outfile:
+    json.dump(user, outfile)
 
-#json.dump(user, f)
-f.close()
+updateSensors(user['api_version']);
