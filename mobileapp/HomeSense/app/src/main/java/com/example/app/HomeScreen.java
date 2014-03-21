@@ -28,18 +28,6 @@ public class HomeScreen extends ActionBarActivity {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        /*Get the message from the intent
-        Intent intent = getIntent();
-        Bundle bundleLogin = intent.getExtras();
-        String email = bundleLogin.getString("email");
-        String pw = bundleLogin.getString("pw");
-
-        //print email & pw for no reason
-        TextView textView = new TextView(this);
-        textView.setTextSize(40);
-        textView.setText("Home Screen");
-
-        setContentView(textView);*/
 
     }
 
