@@ -12,23 +12,11 @@ function LoginVM() {
 LoginVM.prototype.doLogin = function(){
     var self = this;
 
-    window.location = "./pages/dashboard.html?e="+self.email();
-
-    // send ajax to login URL
-    // and go to pages/dashboard.html"
-    /*$.get(
-        "loginURL.php",
-        "{username:"+self.userName+",password"+self.password+"}",
-        function(data) {
-            if(data.loginSuccess){
-                window.location = "./pages/dashboard.html?u="+self.userName();
-            }
-            else{
-                alert("login error!");
-            }
-        },
-        "html"
-    );*/
+    $.ajax({
+        type: "POST",
+        url: "localhost:8080/login",
+        data: { email : self.email(), password: self.password }
+    });
 };
 
 LoginVM.prototype.createAccount = function() {
