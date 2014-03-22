@@ -1,7 +1,9 @@
+var piDA = require('./piDataAccessor.js');
+
 var piController = {
 
     verify : function (data) {
-        return { boom: data.code || "invalidCode" , custId: "foo", deviceId: "bar" };
+        return piDA.verify(data);
     },
 
     update: function(data) {
