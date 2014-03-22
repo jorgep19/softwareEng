@@ -29,7 +29,7 @@
 
     <article class="jumbotron col-md-12">
 		<pre>
-			<font size="18"><b>JOHN DOE</b></font>
+			<font size="18"><b>JOHN DOE</b></font>                  
 			<strong>Average: 60 F</strong>                  <font size="14">62 F</font>        
 			<strong>Outside: 70 F</strong>
 															<strong><center>Temperature Reading</center></strong>
@@ -49,13 +49,24 @@
 <script type="text/javascript" language="javascript" src="jquery.flot.js"></script>
  
 <script type="text/javascript">
-var d1 = [[8, 55], [10, 57], [12, 63], [14, 68], [16, 70],[18,67], [20,60]];
+var JSONObject = '{"name" : "John Johnson", "street" : "Oslo West 16", "age" : 33, "phone" : "555 1234567"}';
 
+	
+	
+var json = JSON.parse(JSONObject);
+<!--alert(json.name);	
 
+var d1 = [[8, json.age], [10, 57], [12, 63], [14, 68], [16, 70],[18,67], [20,60]];
+
+<!--alert(json.age);
+
+	
  
 $(document).ready(function () {
     $.plot($("#placeholder"), [d1]);
 });
+
+
 </script>
 </head>
  
