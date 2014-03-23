@@ -5,14 +5,18 @@ var constructor = function() {
 
     var connection = mysql.createConnection({
         host     : 'localhost',
-        user     : 'root',
-        password : 'Ateamo!'
+        user     : 'dev',
+        password : 'homesense',
+        database: 'HomeSense2'
     });
 
     piDataAccessorInstance.dbCheck = function(data, res) {
         connection.connect();
 
-        connection.query('SELECT * FROM HomeSense2.Customer WHERE cusFirst LIKE \'' + data.name + '\'', function(err, rows, fields) {
+        var queryTemplate = "SELECT * FROM Customer WHERE cusFirst = ?";
+        var inserts = [ data.name ];
+
+        connection.query(mysql.format(queryTemplate, inserts), function(err, rows, fields) {
             if (err) throw err;
 
             var val = rows[0].cusEmail;
