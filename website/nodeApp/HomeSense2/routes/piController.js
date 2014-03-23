@@ -16,6 +16,10 @@ var piController = {
 
     recordData: function(data) {
 
+    },
+
+    dbcheck: function(data, res) {
+        piDA.dbCheck(data, res)
     }
 };
 

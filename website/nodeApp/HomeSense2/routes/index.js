@@ -23,4 +23,8 @@ app.post('/api/pi/put/data', function(req, res){
     res.send(piController.recordData( req.body ) );
 });
 
+app.get('/api/dbcheck', function(req, res){
+    piController.dbcheck( { name: 'Chris' }, res );
+});
+
 // CLIENT METHODS
