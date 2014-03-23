@@ -1,17 +1,15 @@
-var piDataAccessor = {
+var constructor = function() {
 
-    verify : function (data) {
-        return { boom: data.code, custID: "foo", deviceID: "bar" };
-    },
+    var mysql      = require('mysql');
+    var piDataAccessorInstance = {};
 
-    dbCheck: function(data, res) {
-        var mysql      = require('mysql');
-        var connection = mysql.createConnection({
-            host     : 'localhost',
-            user     : 'root',
-            password : 'Ateamo!'
-        });
+    var connection = mysql.createConnection({
+        host     : 'localhost',
+        user     : 'root',
+        password : 'Ateamo!'
+    });
 
+    piDataAccessorInstance.dbCheck = function(data, res) {
         connection.connect();
 
         connection.query('SELECT * FROM HomeSense2.Customer WHERE cusFirst LIKE \'' + data.name + '\'', function(err, rows, fields) {
@@ -25,6 +23,12 @@ var piDataAccessor = {
 
         connection.end();
     }
-};
 
-module.exports = piDataAccessor;
+    piDataAccessorInstance.verify = function (data) {
+        return { boom: data.code, custID: "foo", deviceID: "bar" };
+    };
+
+    return piDataAccessorInstance;
+}
+
+module.exports = constructor();

@@ -1,6 +1,6 @@
 app = require('../app');
 var piController = require('./piController.js');
-
+var customerController = require('./customerController.js');
 
 app.get('/', function(req, res){
     res.send('Server is running')
@@ -8,19 +8,19 @@ app.get('/', function(req, res){
 
 // PI METHODS
 app.post('/api/pi/verify', function(req, res){
-    res.send(piController.verify( req.body ) );
+    piController.verify( req.body, res )
 });
 
 app.post('/api/pi/update', function(req, res){
-    res.send(piController.update( req.body ) );
+    piController.update( req.body, res );
 });
 
 app.post('/api/pi/settings/update', function(req, res){
-    res.send(piController.updateSettings( req.body ) );
+    piController.updateSettings( req.body, res );
 });
 
 app.post('/api/pi/put/data', function(req, res){
-    res.send(piController.recordData( req.body ) );
+    piController.recordData( req.body, res );
 });
 
 app.get('/api/dbcheck', function(req, res){
@@ -28,3 +28,10 @@ app.get('/api/dbcheck', function(req, res){
 });
 
 // CLIENT METHODS
+app.get('/api/customer/register', function(req, res){
+   customerController.registerUser(req.body, res);
+});
+
+app.get('/api/customer/login', function(req, res){
+    customerController.login(req.body, res);
+});

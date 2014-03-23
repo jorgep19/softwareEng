@@ -1,26 +1,26 @@
-var piDA = require('./piDataAccessor.js');
+var constructor = function() {
 
-var piController = {
+    var piDA = require('./piDataAccessor.js');
+    var piControllerInstance = {};
 
-    verify : function (data) {
-        return piDA.verify(data);
-    },
+    piControllerInstance.verify = function (data, res) {
+        return piDA.verify(data, res);
+        // TODO implement;
+    };
 
-    update: function(data) {
-        return
-    },
+    piControllerInstance.update = function(data, res) {
+        // TODO implement;
+    };
 
-    updateSettings: function(data) {
+    piControllerInstance.recordData = function(data, res) {
+        // TODO implement;
+    };
 
-    },
+    piControllerInstance.dbcheck = function(data, res) {
+        piDA.dbCheck(data, res);
+    };
 
-    recordData: function(data) {
-
-    },
-
-    dbcheck: function(data, res) {
-        piDA.dbCheck(data, res)
-    }
+    return piControllerInstance;
 };
 
-module.exports = piController;
+module.exports = constructor();
