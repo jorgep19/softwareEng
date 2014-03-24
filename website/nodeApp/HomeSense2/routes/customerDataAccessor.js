@@ -12,7 +12,7 @@ var constructor = function() {
         database: 'HomeSense2'
     });
 
-    piDataAccessorInstance.insertUserToDb = function(data) {
+    piDataAccessorInstance.insertUserToDb = function(data, response, sendResponse) {
         connection.connect();
 
         var queryTemplate = "INSERT INTO Customer " +
@@ -23,17 +23,11 @@ var constructor = function() {
         var inserts = [ userIdCounter, data.email, data.password ];
 
         connection.query(mysql.format(queryTemplate, inserts), function(err, result) {
-            if (err) throw err;
-
-            // TODO remove once the customer.cusID is set to autoIncrement on the database
+            sendResponse(err, response, result);
             userIdCounter++;
-
-            console.log(result.insertId);
         });
 
         connection.end();
-
-        return true;
     }
 
     piDataAccessorInstance.verify = function (data) {
