@@ -4,7 +4,7 @@ var constructor = function() {
     var piControllerInstance = {};
 
     piControllerInstance.verify = function (data, res) {
-        return piDA.verify(data, res);
+        piDA.verify(data, res);
         // TODO implement;
     };
 

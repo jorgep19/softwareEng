@@ -29,7 +29,7 @@ app.get('/api/dbcheck', function(req, res){
 
 // CLIENT METHODS
 app.get('/api/customer/register', function(req, res){
-   customerController.registerUser( { email: 'dummie@foo.bar', password: '123' }, res );//req.body, res);
+   customerController.registerUser( { email: 'dummie@foo.bar', password: '123' }, res ); // req.body, res);
 });
 
 app.get('/api/customer/login', function(req, res){

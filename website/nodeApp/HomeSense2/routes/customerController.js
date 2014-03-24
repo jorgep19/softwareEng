@@ -1,9 +1,9 @@
 var constructor = function() {
 
     var customerDA = require('./customerDataAccessor.js');
-    var piControllerInstance = {};
+    var customerControllerInstance = {};
 
-    piControllerInstance.registerUser = function (data, res) {
+    customerControllerInstance.registerUser = function (data, res) {
 
         var response = { hasErrors: false, messages: [] };
 
@@ -53,19 +53,7 @@ var constructor = function() {
         }
     };
 
-    piControllerInstance.update = function(data, res) {
-        // TODO implement;
-    };
-
-    piControllerInstance.recordData = function(data, res) {
-        // TODO implement;
-    };
-
-    piControllerInstance.dbcheck = function(data, res) {
-        piDA.dbCheck(data, res);
-    };
-
-    return piControllerInstance;
+    return customerControllerInstance;
 };
 
 module.exports = constructor();
