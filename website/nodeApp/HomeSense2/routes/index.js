@@ -2,6 +2,18 @@ app = require('../app');
 var piController = require('./piController.js');
 var customerController = require('./customerController.js');
 
+function restrict(req, res, next) {
+    console.log(req.session);
+
+    if (req.session.user) {
+        next();
+    } else {
+        //req.session.error = 'Access denied!';
+        res.send("Need to login first");
+    }
+}
+
+// ACTUAL ROUTES
 app.get('/', function(req, res){
     res.send('Server is running')
 });
@@ -33,5 +45,16 @@ app.get('/api/customer/register', function(req, res){
 });
 
 app.get('/api/customer/login', function(req, res){
-    customerController.login(req.body, res);
+    req.body = { email: 'chrisCo@aol.com', password: 'superSecret' };
+
+    customerController.authenticate( req, res);
+});
+
+app.get('/api/customer/logout', function(req, res) {
+    delete req.session.user;
+    res.send("logged out");
+})
+
+app.get('/api/customer/get/sensors', restrict, function(req, res){
+    customerController.registerUser(req.body, res);
 });

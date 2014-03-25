@@ -12,8 +12,22 @@ var constructor = function() {
         database: 'HomeSense2'
     });
 
+    piDataAccessorInstance.authenticateCustomer = function authenticate(req, res, finishAuth) {
+
+        // connection.connect();
+
+        var queryTemplate = "SELECT * FROM Customer WHERE cusEmail = ? AND cusPassword = ?";
+        var inserts = [ req.body.email, req.body.password ];
+
+        connection.query(mysql.format(queryTemplate, inserts), function(err, rows) {
+            finishAuth(err, rows);
+        });
+
+        // connection.end();
+    }
+
     piDataAccessorInstance.insertUserToDb = function(data, response, sendResponse) {
-        connection.connect();
+        // connection.connect();
 
         var queryTemplate = "INSERT INTO Customer " +
             "(`cusID`, `cusFirst`, `cusLast`, `cusMI`, `cusEmail`, `cusPassword`, `cusRegDate`, `cusModDate`, `cusLastLoginDate`) " +
@@ -27,8 +41,9 @@ var constructor = function() {
             userIdCounter++;
         });
 
-        connection.end();
+        // connection.end();
     }
+
 
     piDataAccessorInstance.verify = function (data) {
         return { boom: data.code, custID: "foo", deviceID: "bar" };

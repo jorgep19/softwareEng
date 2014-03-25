@@ -53,6 +53,25 @@ var constructor = function() {
         }
     };
 
+    customerControllerInstance.authenticate = function(req, res) {
+
+        customerDA.authenticateCustomer(req, res, function(err, rows){
+
+            if (rows.length != 0) {
+
+                req.session.regenerate(function(){
+
+                    req.session.user = rows[0].cusEmail;
+                    res.send("logged in as " + req.session.user);
+
+                });
+
+            } else {
+                res.send("Couldn't not authenticate");
+            }
+        });
+    }
+
     return customerControllerInstance;
 };
 

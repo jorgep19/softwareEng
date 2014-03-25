@@ -16,8 +16,9 @@ app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser('HomeSenseKey')); // TODO make this more secure.
+app.use(express.session());
 app.use(app.router);
 
 /// catch 404 and forwarding to error handler
