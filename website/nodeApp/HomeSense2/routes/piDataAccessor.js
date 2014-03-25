@@ -28,9 +28,14 @@ var constructor = function() {
         connection.end();
     }
 
-    piDataAccessorInstance.verify = function (data) {
-        return { boom: data.code, custID: "foo", deviceID: "bar" };
-    };
+    piDataAccessorInstance.getSensorTypes = function(manageOutput) {
+
+        connection.query('SELECT * FROM SensorType' , function(err, rows) {
+            manageOutput(rows);
+        });
+
+    }
+
 
     return piDataAccessorInstance;
 }

@@ -16,6 +16,12 @@ var constructor = function() {
         // TODO implement;
     };
 
+    piControllerInstance.getSensorTypes = function (res) {
+        piDA.getSensorTypes(function(rows){
+            res.send(rows);
+        });
+    }
+
     piControllerInstance.dbcheck = function(data, res) {
         piDA.dbCheck(data, res);
     };

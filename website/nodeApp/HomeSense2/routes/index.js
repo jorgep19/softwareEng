@@ -3,13 +3,12 @@ var piController = require('./piController.js');
 var customerController = require('./customerController.js');
 
 function restrict(req, res, next) {
-    console.log(req.session);
 
     if (req.session.user) {
         next();
     } else {
         //req.session.error = 'Access denied!';
-        res.send("Need to login first");
+        res.send({ hasErrors: true, messages: ['Must Login first.']});
     }
 }
 
@@ -56,5 +55,9 @@ app.get('/api/customer/logout', function(req, res) {
 })
 
 app.get('/api/customer/get/sensors', restrict, function(req, res){
-    customerController.registerUser(req.body, res);
+    customerController.getUserPis(req.body, res);
+});
+
+app.get('/api/sensor/get/types', restrict, function(req, res){
+    piController.getSensorTypes( res );
 });
