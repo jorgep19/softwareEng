@@ -55,21 +55,44 @@ var constructor = function() {
 
     customerControllerInstance.authenticate = function(req, res) {
 
-        customerDA.authenticateCustomer(req, res, function(err, rows){
+        var response = { hasErrors: false, messages: [] };
 
-            if (rows.length != 0) {
+        // TODO fully implement this validations
+        if(req.body.email.length === 0)
+        {
+            response.hasErrors = true;
+            response.messages.push("Email is required");
+        }
 
-                req.session.regenerate(function(){
+        // TODO fully implement this validations
+        if(req.body.password.length === 0)
+        {
+            response.hasErrors = true;
+            response.messages.push("Password is required");
+        }
+
+        if(!response.hasErrors) {
+
+            customerDA.authenticateCustomer(req, res, function(err, rows){
+
+                 if (rows.length != 0) {
+                    req.session.regenerate(function(){
 
                     req.session.user = rows[0].cusEmail;
-                    res.send("logged in as " + req.session.user);
+                    res.send({ hasErrors: false,
+                        messages: ["Logged in as " + req.body.email] } );
 
                 });
+                } else {
+                    res.send({ hasErrors: true,
+                        messages: ["Didn't find account for " + req.body.email] } );
+                }
+            });
+        } else {
 
-            } else {
-                res.send("Couldn't not authenticate");
-            }
-        });
+            res.send(response);
+        }
+
     }
 
     return customerControllerInstance;
