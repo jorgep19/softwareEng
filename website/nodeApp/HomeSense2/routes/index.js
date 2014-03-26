@@ -31,7 +31,7 @@ app.post('/api/pi/settings/update', function(req, res){
 });
 
 app.post('/api/pi/put/data', function(req, res){
-    piController.recordData( req.body, res );
+    piController.recordSensorReadings( req.body, res );
 });
 
 app.get('/api/dbcheck', function(req, res){
@@ -54,8 +54,8 @@ app.get('/api/customer/logout', function(req, res) {
     res.send("logged out");
 })
 
-app.get('/api/customer/get/sensors', restrict, function(req, res){
-    customerController.getUserPis(req.body, res);
+app.get('/api/customer/get/summary/data', restrict, function(req, res){
+    piController.getDataSummaryForUser(req.session.user, res);
 });
 
 app.get('/api/sensor/get/types', restrict, function(req, res){
