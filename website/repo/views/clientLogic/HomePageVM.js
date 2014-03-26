@@ -1,4 +1,4 @@
-function registrationVM() {
+function loginVM() {
     var self = this;
 
     // could also be te user's email
@@ -7,7 +7,7 @@ function registrationVM() {
     self.passwordRetype = ko.observable("");
 }
 
-registrationVM.prototype.doLogin = function(){
+loginVM.prototype.doLogin = function(){
     var self = this;
 
     $.ajax({
@@ -17,7 +17,7 @@ registrationVM.prototype.doLogin = function(){
     }).done(function(data) {
             if(data.hasErrors)
             {
-               alert(data.messages);
+                alert(data.messages);
             }
             else
             {
@@ -26,4 +26,4 @@ registrationVM.prototype.doLogin = function(){
         });
 };
 
-ko.applyBindings(new registrationVM());
+ko.applyBindings(new loginVM());

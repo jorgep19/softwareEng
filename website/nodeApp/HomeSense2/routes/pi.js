@@ -4,7 +4,7 @@
  *
  * @author asura
  */
-var util    = require('../common').util
+var util    = require('../../../nodejs/api/common').util
 var vali    = require('validator')
 // DataAccessObject is used to read the database
 var dao = require('./dao')

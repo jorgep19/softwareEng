@@ -19,10 +19,10 @@ app.use(express.urlencoded())
 app.use(express.logger())
 
 
-var customer = require('./modules/customer')
-var sensor   = require('./modules/sensor')
-var pi       = require('./modules/pi')
-var dao      = require('./modules/dao')
+var customer = require('./../../nodeApp/HomeSense2/routes/customer')
+var sensor   = require('./../../nodeApp/HomeSense2/routes/sensor')
+var pi       = require('./../../nodeApp/HomeSense2/routes/pi')
+var dao      = require('./../../nodeApp/HomeSense2/routes/dao')
 
 // Define paths from where we serve the static request
 app.use('/img',   express.static( __dirname + '/public/images'));

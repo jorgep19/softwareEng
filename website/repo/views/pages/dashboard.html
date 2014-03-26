@@ -41,7 +41,7 @@
         </section>
 		<section class="col-md-2">
             <a href="PiManagement.html">
-                <button class="btn btn-default pull-right">
+                <button class="btn btn-default pull-right" data-bind="click: addPi">
 					<label>Add a Pi</label>
                 </button>
             </a>
@@ -91,6 +91,8 @@
         &copy; HomeSense 2014
     </footer>
 </main>
+<script src="../lib/js/knockout-3.js"></script>
+<script src="../clientLogic/dashboardVM.js"></script>
 </body>
 </html>
 

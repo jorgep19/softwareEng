@@ -92,8 +92,19 @@ var constructor = function() {
 
             res.send(response);
         }
-
     }
+
+    customerControllerInstance.genpicode = function (userEmail, res) {
+
+        customerDA.insertDevice(userEmail, function(devID) {
+            if(devID) {
+                res.send( { hasErrors: false, code: devID } );
+            } else {
+                res.send( { hasErrors: true, messages: "couldn't register PI" } );
+            }
+
+        })
+    };
 
     return customerControllerInstance;
 };

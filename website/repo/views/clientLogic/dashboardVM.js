@@ -1,7 +1,7 @@
 /**
  * Created by jorgep on 2/23/14.
  */
-function LoginVM() {
+function dashboardVM() {
     var self = this;
 
     // could also be te user's email
@@ -12,20 +12,23 @@ function LoginVM() {
     self.successFeedback = ko.observable(false);
 }
 
+dashboardVM.prototype.addPi = function(){
 
-
-LoginVM.prototype.createAccount = function() {
     var self = this;
+    window.location = 'PiManagement.html?code=' +22;
+   /* $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/api/customer/genpicode"
+    }).done(function(data) {
+            if(data.hasErrors)
+            {
+                alert(data.messages);
+            }
+            else
+            {
 
-    /*$.ajax({
-     url: "http://homesense.abovotec.com/api/customer/register?cusEmail="+self.email()+"&cusFrist=x&cusLast=y&cusMI=z"
-     })
-     .fail(function() { alert("failed to register"); })
-     .done(function( data ) { alert("created your account :)"); });*/
-
-    self.successFeedback(true);
-
-    setTimeout(function(){ window.location = "dashboard.html?e="+self.email(); },3000);
+            }
+        });*/
 };
 
-ko.applyBindings(new LoginVM());
+ko.applyBindings(new dashboardVM());

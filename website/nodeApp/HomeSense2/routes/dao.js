@@ -1,7 +1,7 @@
 
 // include common modules
-var com     = require('../common')
-var util    = require('../common').util
+var com     = require('../../../nodejs/api/common')
+var util    = require('../../../nodejs/api/common').util
 var mysql   = require('mysql')
  
 var dao = {

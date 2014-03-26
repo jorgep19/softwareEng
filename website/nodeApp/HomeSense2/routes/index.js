@@ -1,6 +1,7 @@
 app = require('../app');
 var piController = require('./piController.js');
 var customerController = require('./customerController.js');
+// var customer = require('customer');
 
 /**
 *  Pass this function as parameter to
@@ -23,7 +24,7 @@ app.get('/', function(req, res){
 
 // PI METHODS
 app.post('/api/pi/verify', function(req, res){
-    res.send({ again: "Let's pretend it works" });
+    res.send("This pi has been verified :)");
     // piController.verify( req.body, res )
 });
 
@@ -52,7 +53,9 @@ app.post('/api/customer/register', function(req, res){
 });
 
 app.post('/api/customer/login', function(req, res){
-    // TEST DATA req.body = { email: 'chrisCo@aol.com', password: 'superSecret' };
+    // TEST DATA
+    //req.body = { email: 'chrisCo@aol.com', password: 'superSecret' };
+
     console.log("login as" + req.body);
     customerController.authenticate( req, res);
 });
@@ -73,3 +76,8 @@ app.get('/api/sensor/get/types', restrict, function(req, res){
 app.get('/api/get/temperature/data', function(req, res){
     piController.getTemperatureData( 13, res );
 })
+
+app.get('/api/customer/genpicode', function(req, res) {
+    console.log("adding pi to " + req.session.user)
+    customerController.genpicode('chrisCo@aol.com', res);
+});

@@ -13,7 +13,7 @@ RegistrationVM.prototype.createAccount = function(){
 
     if(self.passwordRetype() !== self.password())
     {
-        //there is an error
+        alert("password and retype don't match");
         return;
     }
 
@@ -23,16 +23,7 @@ RegistrationVM.prototype.createAccount = function(){
         data: { email : self.email(), password: self.password }
     }).done( function(){
             self.successFeedback(true); });
-
-    if(self.successFeedback()) {
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:8080/api/customer/login",
-            data: { email : self.email(), password: self.password }
-        }.done(function(data) {
-                setTimeout(function(){ window.location = "dashboard.html"; }, 1000);
-            } ) );
-    }
+             window.location = "dashboard.html";
 };
 
 ko.applyBindings(new RegistrationVM());
