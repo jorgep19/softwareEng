@@ -5,8 +5,8 @@ import json
 url = "http://198.46.148.121/api/pi/verify"
 input = input("Enter code from website: ");
 
-input_info = input
-user_data = requests.post(url, data=input)
+input_info = {"code":input}
+user_data = requests.post(url, data=input_info)
 # user_data = requests.urlopen(url)
 # user = json.loads(user_data.readall().decode('utf-8'))
 
