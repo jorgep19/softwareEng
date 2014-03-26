@@ -31,7 +31,6 @@ var constructor = function() {
 
         connection.query(mysql.format(queryTemplate, inserts), function(err, result) {
             sendResponse(err, response, result);
-            userIdCounter++;
         });
     }
 

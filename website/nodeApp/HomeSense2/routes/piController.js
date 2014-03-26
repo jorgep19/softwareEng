@@ -56,6 +56,12 @@ var constructor = function() {
         });
     };
 
+    piControllerInstance.getTemperatureData = function(sensID, res){
+        piDA.getTemperatureData(sensID, function(rows){
+            res.send(rows);
+        });
+    };
+
     return piControllerInstance;
 };
 

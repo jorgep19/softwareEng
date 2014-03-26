@@ -53,29 +53,35 @@ var constructor = function() {
 
         var inserts = [ cusId, sensorData.sensID, sensorData.sdataValue ];
 
-        console.log("about to exec query" );
-        console.log(sensorData);
         connection.query(mysql.format(queryTemplate, inserts), function(err, result) {
             if(err) {
                 res.send("Shyt went wrong!")
             }
             res.write("inserted data for sensor ID" + sensorData.sensID);
-            console.log("inserted data for sensor ID" + sensorData.sensID);
         });
-    }
+    };
 
     piDataAccessorInstance.recordSensorReadings = function(data, res, insertRow) {
 
+        console.log(data);
+
         for(var i = 0; i < data.sensors.length; i++)
         {
-            console.log("inserting row" + i );
-            console.log(data.sensors[i]);
             insertRow(data.cusID, data.sensors[i], res);
         }
 
         console.log("finished");
-    }
+    };
 
+    piDataAccessorInstance.getTemperatureData = function (sensID, manageout){
+        var queryTemplate = "SELECT * FROM SensorData WHERE sensID = ?"
+
+        var inserts = [ sensID ];
+
+        connection.query(mysql.format(queryTemplate, inserts), function(err, rows) {
+            manageout(rows);
+        });
+    };
 
     return piDataAccessorInstance;
 }

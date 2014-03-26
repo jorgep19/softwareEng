@@ -56,7 +56,7 @@ var constructor = function() {
     customerControllerInstance.authenticate = function(req, res) {
 
         var response = { hasErrors: false, messages: [] };
-
+        console.log(req.body)
         // TODO fully implement this validations
         if(req.body.email.length === 0)
         {

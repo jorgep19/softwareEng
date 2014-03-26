@@ -5,6 +5,7 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cors = require('cors')
 
 var app = module.exports = express();
 
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser('HomeSenseKey')); // TODO make this more secure.
 app.use(express.session());
+app.use(cors());
 app.use(app.router);
 
 /// catch 404 and forwarding to error handler

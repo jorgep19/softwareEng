@@ -1,37 +1,29 @@
-function LoginVM() {
+function registrationVM() {
     var self = this;
 
     // could also be te user's email
-    self.userName = ko.observable("");
     self.email = ko.observable("");
     self.password = ko.observable("");
     self.passwordRetype = ko.observable("");
-    self.successFeedback = ko.observable(false);
 }
 
-LoginVM.prototype.doLogin = function(){
+registrationVM.prototype.doLogin = function(){
     var self = this;
 
     $.ajax({
         type: "POST",
-        url: "localhost:8080/login",
+        url: "http://localhost:8080/api/customer/login",
         data: { email : self.email(), password: self.password }
-    });
+    }).done(function(data) {
+            if(data.hasErrors)
+            {
+               alert(data.messages);
+            }
+            else
+            {
+                window.location = './pages/dashboard.html';
+            }
+        });
 };
 
-LoginVM.prototype.createAccount = function() {
-    var self = this;
-
-    /*$.ajax({
-        url: "http://homesense.abovotec.com/api/customer/register?cusEmail="+self.email()+"&cusFrist=x&cusLast=y&cusMI=z"
-    })
-     http://homesense.abovotec.com/api/sensor/get_sensor_data/?email=indera@gmail.com&pass=pass&device=RasPi_Garage&sensor=TempSens1
-    .fail(function() { alert("failed to register"); })
-    .done(function( data ) { alert("created your account :)"); });*/
-
-    self.successFeedback(true);
-
-    setTimeout(function(){ window.location = "dashboard.html?e="+self.email(); }, 1000);
-};
-
-ko.applyBindings(new LoginVM());
+ko.applyBindings(new registrationVM());

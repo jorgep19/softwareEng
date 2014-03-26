@@ -23,7 +23,8 @@ app.get('/', function(req, res){
 
 // PI METHODS
 app.post('/api/pi/verify', function(req, res){
-    piController.verify( req.body, res )
+    res.send({ again: "Let's pretend it works" });
+    // piController.verify( req.body, res )
 });
 
 app.post('/api/pi/update', function(req, res){
@@ -34,19 +35,9 @@ app.post('/api/pi/settings/update', function(req, res){
     piController.updateSettings( req.body, res );
 });
 
-app.get('/api/pi/put/data', function(req, res){
-    piController.recordSensorReadings({
-        cusID: 2019,
-        sensors: [
-        {
-            sensID: 13,
-            sdataValue: 29
-        },
-        {
-            sensID: 23,
-            sdataValue: 45
-        }]
-    } , res); //req.body, res );
+app.post('/api/pi/put/data', function(req, res){
+    // TEST DATA: { cusID: 2019, sensors: [ { sensID: 13, sdataValue: 29 }, { sensID: 23, sdataValue: 45} ]}
+    piController.recordSensorReadings(req.body, res );
 });
 
 app.get('/api/dbcheck', function(req, res){
@@ -54,13 +45,15 @@ app.get('/api/dbcheck', function(req, res){
 });
 
 // CLIENT METHODS
-app.get('/api/customer/register', function(req, res){
-   customerController.registerUser( { email: 'dummie@foo.bar', password: '123' }, res ); // req.body, res);
+app.post('/api/customer/register', function(req, res){
+    // TEST DATA: { email: 'dummie@foo.bar', password: '123' }
+    console.log("registering" + req.body);
+   customerController.registerUser( req.body, res);
 });
 
-app.get('/api/customer/login', function(req, res){
-    req.body = { email: 'chrisCo@aol.com', password: 'superSecret' };
-
+app.post('/api/customer/login', function(req, res){
+    // TEST DATA req.body = { email: 'chrisCo@aol.com', password: 'superSecret' };
+    console.log("login as" + req.body);
     customerController.authenticate( req, res);
 });
 
@@ -76,3 +69,7 @@ app.get('/api/customer/get/summary/data', restrict, function(req, res){
 app.get('/api/sensor/get/types', restrict, function(req, res){
     piController.getSensorTypes( res );
 });
+
+app.get('/api/get/temperature/data', function(req, res){
+    piController.getTemperatureData( 13, res );
+})
