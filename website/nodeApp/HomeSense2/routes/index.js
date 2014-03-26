@@ -2,6 +2,10 @@ app = require('../app');
 var piController = require('./piController.js');
 var customerController = require('./customerController.js');
 
+/**
+*  Pass this function as parameter to
+*  routes which needs to check the presence of a valid session. 
+*/
 function restrict(req, res, next) {
 
     if (req.session.user) {
