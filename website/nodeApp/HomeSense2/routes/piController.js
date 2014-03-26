@@ -13,7 +13,7 @@ var constructor = function() {
     };
 
     piControllerInstance.recordSensorReadings = function(data, res) {
-        piDA.recordSensorReadings(data, res);
+        piDA.recordSensorReadings(data, res, piDA.insertDataRow);
     };
 
     piControllerInstance.getSensorTypes = function (res) {
