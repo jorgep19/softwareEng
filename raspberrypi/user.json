@@ -1,1 +1,1 @@
-{"status":"error","message":"Unable to verify device code:"}
+{"status":"success","user":[{"cusID":6,"cusEmail":"test@test.com","cusRegDate":"2014-03-24T06:26:51.000Z"}]}
