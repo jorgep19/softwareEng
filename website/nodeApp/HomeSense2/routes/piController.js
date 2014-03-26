@@ -12,8 +12,8 @@ var constructor = function() {
         // TODO implement;
     };
 
-    piControllerInstance.recordData = function(data, res) {
-        // TODO implement;
+    piControllerInstance.recordSensorReadings = function(data, res) {
+        piDA.recordSensorReadings(data, res);
     };
 
     piControllerInstance.getSensorTypes = function (res) {

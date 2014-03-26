@@ -31,7 +31,7 @@ app.post('/api/pi/settings/update', function(req, res){
 });
 
 app.post('/api/pi/put/data', function(req, res){
-    piController.recordData( req.body, res );
+    piController.recordSensorReadings( req.body, res );
 });
 
 app.get('/api/dbcheck', function(req, res){

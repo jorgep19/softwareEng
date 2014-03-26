@@ -45,6 +45,25 @@ var constructor = function() {
         });
     };
 
+    piDataAccessorInstance.recordSensorReadings = function(data, res) {
+
+        for(var i = 0; i < data.sensors; i++)
+        {
+            var queryTemplate = "INSERT INTO SensorData " +
+                "(sdataID, cusID, sensID, sdataValue, sdataRecordedDate) " +
+                "VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP);";
+
+            var inserts = [ data.cusID, data.sensors[i].sensID, data.sensors[i].sdataValue ];
+
+            connection.query(mysql.format(queryTemplate, inserts), function(err, result) {
+                if(err) {
+
+                    res.send("Shyt went wrong!")
+                }
+            });
+        }
+    }
+
 
     return piDataAccessorInstance;
 }
