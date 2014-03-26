@@ -11,7 +11,6 @@ var constructor = function() {
     });
 
     piDataAccessorInstance.dbCheck = function(data, res) {
-        connection.connect();
 
         var queryTemplate = "SELECT * FROM Customer WHERE cusFirst = ?";
         var inserts = [ data.name ];
@@ -24,8 +23,6 @@ var constructor = function() {
             console.log('The solution is: ', val);
             res.send('The solution is: ' + val);
         });
-
-        connection.end();
     }
 
     piDataAccessorInstance.getSensorTypes = function(manageOutput) {
@@ -35,6 +32,18 @@ var constructor = function() {
         });
 
     }
+
+    piDataAccessorInstance.getDataSummaryForUser = function(userEmail, manageOutput) {
+
+        var query = "SELECT Device.devDesc, Sensor.sensDesc, SensorData.sdataValue, Sensor.stypeID " +
+            "FROM Sensor NATURAL JOIN Device NATURAL JOIN Customer NATURAL JOIN SensorData " +
+            "WHERE Customer.cusEmail = ? GROUP BY Device.devDesc, Sensor.sensDesc"
+        var inserts = [ userEmail ];
+
+        connection.query(mysql.format(query, inserts), function(err, rows) {
+            manageOutput(rows);
+        });
+    };
 
 
     return piDataAccessorInstance;

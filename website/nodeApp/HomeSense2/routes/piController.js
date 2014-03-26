@@ -26,6 +26,36 @@ var constructor = function() {
         piDA.dbCheck(data, res);
     };
 
+    var insertPiInCollection = function(collection, value) {
+
+        for(var i = 0 ; i < collection.length; i++) {
+            if( collection[i].desc === value.devDesc) {
+                collection[i].sensors.push( { desc: value.sensDesc, type: value.stypeID, data: value.sdataValue });
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    piControllerInstance.getDataSummaryForUser = function (userEmail, res) {
+        piDA.getDataSummaryForUser(userEmail, function(rows){
+
+            var userData = { pis: [] };
+
+            // TODO refactor to something not as hacky
+            for(var i = 0 ; i < rows.length; i++) {
+
+                if( insertPiInCollection(userData.pis, rows[i]) ) {
+
+                  userData.pis.push( { desc: rows[i].devDesc, sensors: [ { desc: rows[i].sensDesc, type: rows[i].stypeID, data: rows[i].sdataValue } ] } )
+                }
+            }
+
+            res.send(userData);
+        });
+    };
+
     return piControllerInstance;
 };
 
