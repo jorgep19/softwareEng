@@ -2,14 +2,15 @@ import requests
 import time
 import json
 import RPi.GPIO as GPIO  
-import sendEmail
+import smtplib
+
 GPIO.setmode(GPIO.BCM)
 
 # PIN SETUP
 GPIO.setup(2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  
 
 def motion(channel): 
-    sendEmail.sendEmail(); 
+    sendEmail(); 
     print ("MOTION DETECTED")  
 
 GPIO.add_event_detect(2, GPIO.FALLING, callback=motion)  
@@ -31,3 +32,29 @@ except KeyboardInterrupt:
     GPIO.cleanup()  # clean up GPIO on CTRL+C exit  
 GPIO.cleanup()  # clean up GPIO on normal exit  	
 
+
+def sendEmail():
+    TO = '7864455132@messaging.sprintpcs.com'
+        
+    SUBJECT = 'Intrusion Detection'
+    TEXT = 'Motion has been activated.'
+    
+    # Gmail Sign In
+    gmail_sender = 'HomesenseTechnology@gmail.com'
+    gmail_passwd = 'HomesenseTechnology1'
+    
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+    server.login(gmail_sender, gmail_passwd)
+    
+    BODY = '\r\n'.join(['To: %s' % TO,
+                        'From: %s' % gmail_sender,
+                        'Subject: %s' % SUBJECT,
+                        '', TEXT])
+    try:
+        server.sendmail(gmail_sender, [TO], BODY)
+        print ('email sent')
+    except:
+        print ('error sending mail')
+    server.quit()
