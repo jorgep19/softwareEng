@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.app.PWRec"
+    tools:ignore="MergeRootFrame" >
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editTextEmailRec"
+        android:layout_weight="0"
+        android:hint="Email" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Recover Password"
+        android:id="@+id/buttonRecover"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0"
+        android:onClick="loginMessage"/>
+
+</LinearLayout>
