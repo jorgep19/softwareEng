@@ -2,12 +2,14 @@ import requests
 import time
 import json
 import RPi.GPIO as GPIO  
+import sendEmail
 GPIO.setmode(GPIO.BCM)
 
 # PIN SETUP
 GPIO.setup(2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  
 
-def motion(channel):  
+def motion(channel): 
+    sendEmail.sendEmail(); 
     print ("MOTION DETECTED")  
 
 GPIO.add_event_detect(2, GPIO.FALLING, callback=motion)  
