@@ -5,12 +5,12 @@ import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
 
 # PIN SETUP
-# GPIO.setup(2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  
+GPIO.setup(2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  
 
 def motion(channel):  
     print ("MOTION DETECTED")  
 
-# GPIO.add_event_detect(2, GPIO.RISING, callback=motion)  
+GPIO.add_event_detect(2, GPIO.FALLING, callback=motion)  
 	
 timestamp = time.strftime("%Y-%m-%d-%H-%M-%S")
 
@@ -22,9 +22,8 @@ user = json.loads(jsonstr)
 # urllib.request.urlopen(req)
 	
 try:  
-    print("Waiting for rising edge on port 2")
-    GPIO.wait_for_edge(2, GPIO.RISING)  
-    print ("Rising edge detected on port 24. Here endeth the third lesson.")
+    while(1):
+        count=1;
   
 except KeyboardInterrupt:  
     GPIO.cleanup()  # clean up GPIO on CTRL+C exit  
