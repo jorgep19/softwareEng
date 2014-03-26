@@ -2,7 +2,7 @@ import requests
 import json
 # from update import updateSensors
 
-url = "http://198.46.148.121/api/pi/verify"
+url = "http://10.136.46.30:8080/api/pi/verify"
 input = input("Enter code from website: ");
 
 input_info = {"code":input}
