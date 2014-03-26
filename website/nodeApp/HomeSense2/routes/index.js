@@ -30,8 +30,19 @@ app.post('/api/pi/settings/update', function(req, res){
     piController.updateSettings( req.body, res );
 });
 
-app.post('/api/pi/put/data', function(req, res){
-    piController.recordSensorReadings( req.body, res );
+app.get('/api/pi/put/data', function(req, res){
+    piController.recordSensorReadings({
+        cusID: 2019,
+        sensors: [
+        {
+            sensID: 13,
+            sdataValue: 29
+        },
+        {
+            sensID: 23,
+            sdataValue: 45
+        }]
+    } , res); //req.body, res );
 });
 
 app.get('/api/dbcheck', function(req, res){

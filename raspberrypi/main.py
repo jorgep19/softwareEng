@@ -8,7 +8,7 @@ GPIO.setmode(GPIO.BCM)
 #GPIO.setup(2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  
 
 def motion(channel):  
-    print "MOTION DETECTED"  
+    print ("MOTION DETECTED")  
 
 #GPIO.add_event_detect(2, GPIO.RISING, callback=motion)  
 	

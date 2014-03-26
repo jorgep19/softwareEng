@@ -45,23 +45,35 @@ var constructor = function() {
         });
     };
 
-    piDataAccessorInstance.recordSensorReadings = function(data, res) {
+    piDataAccessorInstance.insertDataRow = function(cusId, sensorData, res){
 
-        for(var i = 0; i < data.sensors; i++)
+        var queryTemplate = "INSERT INTO SensorData " +
+            "(sdataID, cusID, sensID, sdataValue, sdataRecordedDate) " +
+            "VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP);";
+
+        var inserts = [ cusId, sensorData.sensID, sensorData.sdataValue ];
+
+        console.log("about to exec query" );
+        console.log(sensorData);
+        connection.query(mysql.format(queryTemplate, inserts), function(err, result) {
+            if(err) {
+                res.send("Shyt went wrong!")
+            }
+            res.write("inserted data for sensor ID" + sensorData.sensID);
+            console.log("inserted data for sensor ID" + sensorData.sensID);
+        });
+    }
+
+    piDataAccessorInstance.recordSensorReadings = function(data, res, insertRow) {
+
+        for(var i = 0; i < data.sensors.length; i++)
         {
-            var queryTemplate = "INSERT INTO SensorData " +
-                "(sdataID, cusID, sensID, sdataValue, sdataRecordedDate) " +
-                "VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP);";
-
-            var inserts = [ data.cusID, data.sensors[i].sensID, data.sensors[i].sdataValue ];
-
-            connection.query(mysql.format(queryTemplate, inserts), function(err, result) {
-                if(err) {
-
-                    res.send("Shyt went wrong!")
-                }
-            });
+            console.log("inserting row" + i );
+            console.log(data.sensors[i]);
+            insertRow(data.cusID, data.sensors[i], res);
         }
+
+        console.log("finished");
     }
 
 
