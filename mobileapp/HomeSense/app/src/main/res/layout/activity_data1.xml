@@ -8,6 +8,11 @@
     tools:ignore="MergeRootFrame" >
 
     <TextView
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -22,13 +27,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="17"
+        android:text="0"
         android:id="@+id/butCurData"
         android:textSize="100sp"
         android:layout_below="@+id/textSensorName"
         android:layout_marginTop="50dp"
-        android:layout_gravity="center_horizontal"
-        />
+        android:layout_gravity="center_horizontal"/>
+        <!--android:onClick ="doGetTemperature"-->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,7 +71,7 @@
                 android:id="@+id/textLowData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10"
+                android:text="0"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_gravity="center_horizontal"
                 />
@@ -93,7 +99,7 @@
                 android:id="@+id/textMeanData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="15"
+                android:text="0"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_gravity="center_horizontal"
                 />
@@ -121,7 +127,7 @@
                 android:id="@+id/textHighData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20"
+                android:text="0"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_gravity="center_horizontal"
                 />

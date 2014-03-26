@@ -37,8 +37,8 @@ public class HomeScreen extends ActionBarActivity {
         TOKEN = intent.getStringExtra(MainActivity.TOKEN_MESSAGE);
 
         // used for testing. delete before final
-        TextView test = (TextView) findViewById(R.id.test);
-        test.setText(TOKEN);
+/*        TextView test = (TextView) findViewById(R.id.test);
+        test.setText(TOKEN);*/
     }
 
     public void doTemp(View view) {
