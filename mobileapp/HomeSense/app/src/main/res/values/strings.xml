@@ -7,5 +7,6 @@
     <string name="title_activity_home_screen">HomeScreen</string>
     <string name="title_activity_pwrec">PWRec</string>
     <string name="title_activity_data1">Data1</string>
+    <string name="title_activity_data2">Data2</string>
 
 </resources>

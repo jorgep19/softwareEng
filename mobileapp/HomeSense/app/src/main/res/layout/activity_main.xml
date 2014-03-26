@@ -37,7 +37,7 @@ android:focusableInTouchMode="false">
     android:id="@+id/buttonLogin"
     android:layout_gravity="center_horizontal"
     android:layout_weight="0"
-    android:onClick="loginMessage"/>
+    android:onClick="doLogin"/>
 
 <Button
     android:layout_width="match_parent"

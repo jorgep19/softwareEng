@@ -15,6 +15,10 @@ import android.os.Build;
 import android.widget.TextView;
 
 public class HomeScreen extends ActionBarActivity {
+
+    public final static String TOKEN_MESSAGE = "theToken";
+    public String TOKEN = "Try again.";
+
     @SuppressLint("NewApi")
 
     @Override
@@ -26,35 +30,30 @@ public class HomeScreen extends ActionBarActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             // Show the Up button in the action bar.
             getActionBar().setDisplayHomeAsUpEnabled(true);
+
         }
 
-        /*Get the message from the intent
         Intent intent = getIntent();
-        Bundle bundleLogin = intent.getExtras();
-        String email = bundleLogin.getString("email");
-        String pw = bundleLogin.getString("pw");
+        TOKEN = intent.getStringExtra(MainActivity.TOKEN_MESSAGE);
 
-        //print email & pw for no reason
-        TextView textView = new TextView(this);
-        textView.setTextSize(40);
-        textView.setText("Home Screen");
+        // used for testing. delete before final
+        TextView test = (TextView) findViewById(R.id.test);
+        test.setText(TOKEN);
+    }
 
-        setContentView(textView);*/
+    public void doTemp(View view) {
+        Intent intent = new Intent(this, Data1.class);
+        intent.putExtra(TOKEN_MESSAGE, TOKEN);
+        startActivity(intent);
+    }
 
+    public void doMotion(View view) {
+        Intent intent = new Intent(this, Data2.class);
+        intent.putExtra(TOKEN_MESSAGE, TOKEN);
+        startActivity(intent);
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 }
 
