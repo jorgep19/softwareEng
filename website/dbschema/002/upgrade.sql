@@ -1,5 +1,6 @@
 
-USE abovotec_home;
+-- USE abovotec_home;
+USE Homesense;
 
 -- Stores customer details
 CREATE TABLE Customer (
@@ -69,6 +70,7 @@ CREATE TABLE PhoneNumber (
 CREATE TABLE Device (
    devID integer unsigned NOT NULL AUTO_INCREMENT,
    cusID integer unsigned NOT NULL,
+   devActivated tinyint DEFAULT 0,
    devDesc varchar(255) NOT NULL,
    devAddedDate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
  PRIMARY KEY (devID),

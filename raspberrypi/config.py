@@ -1,16 +1,22 @@
-import urllib.parse
-import urllib.request
+import requests
 import json
-from update import updateSensors
+# from update import updateSensors
 
-url= "http://api.transloc.com/1.2/arrival-estimates.json?agencies=116"
+url = "http://198.46.148.121/api/pi/verify"
 input = input("Enter code from website: ");
-#url+=input
 
-user_data= urllib.request.urlopen(url)
-user= json.loads(user_data.readall().decode('utf-8'))
+input_info = input
+user_data = requests.post(url, data=input)
+# user_data = requests.urlopen(url)
+# user = json.loads(user_data.readall().decode('utf-8'))
 
-with open('user.json', 'w') as outfile:
-    json.dump(user, outfile)
+print(user_data.text)
+f = open('user.json', 'w')
+f.write(user_data.text)
 
-updateSensors(user['api_version']);
+#update.UpdateSensors()
+
+# with open('user.json', 'w') as outfile:
+#   outfile.write(user_data.text, outfile)
+
+# updateSensors(user['api_version']);
