@@ -43,6 +43,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.app.HomeScreen" />
         </activity>
+        <activity
+            android:name="com.example.app.Data2"
+            android:label="@string/title_activity_data2"
+            android:parentActivityName="com.example.app.HomeScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.app.HomeScreen" />
+        </activity>
     </application>
 
 </manifest>

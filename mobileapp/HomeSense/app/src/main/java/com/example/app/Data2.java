@@ -11,18 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
-public class Data1 extends ActionBarActivity {
+public class Data2 extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_data1);
+        setContentView(R.layout.activity_data2);
 
-        doGetTemperature();
-    }
-
-    public void doGetTemperature(){
 
     }
+
 
 }
