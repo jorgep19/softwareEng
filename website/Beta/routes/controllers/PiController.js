@@ -29,10 +29,10 @@ var constructor = function() {
                     response.hasErrors = false;
                     response.messages.push("Your pi has been verified :)");
                 }
-                res.send(response);
+                res.json(response);
             });
         } else {
-            res.send(response);
+            res.json(response);
         }
     };
 

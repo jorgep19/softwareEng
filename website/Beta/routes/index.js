@@ -18,7 +18,7 @@ var checkSessionBeforeExec = function(requestHandler) {
 
 // TEST ROUTES
 app.get('/', function(req, res){ res.send('Server is running') });
-app.get('/dbtest', checkSessionBeforeExec(sensorController.getSensorTypes) );
+app.get('/dbtest', sensorController.getSensorTypes );
 
 // PI ROUTES
 app.post('/api/pi/verify', piController.verifyPi);                                      // basic support
@@ -28,10 +28,50 @@ app.post('/api/pi/verify', piController.verifyPi);                              
 // TODO implement app.post('/api/pi/settings/update', );
 
 // CLIENTS ROUTES
+
+// This URL creates a user account if possible
+// Expects a JSON of this form: { email: 'dummie@foo.bar', password: '123' }
+// Returns a JSON of this form: { hasErrors: false, messages: [] }
+// in that JSON hasErrors is a boolean that states if there was an error
+// and messages is an array of string that has either error messages
+// or a message saying that the operation was successful
 app.post('/api/customer/register', userController.registerUser);                        // basic support
+
+// This URL starts session
+// Expects a JSON of this form: { email: 'dummie@foo.bar', password: '123' }
+// Returns a JSON of this form: { hasErrors: false, messages: [] }
+// in that JSON hasErrors is a boolean that states if there was an error
+// and messages is an array of string that has either error messages
+// or a message saying that the operation was successful
 app.post('/api/login/', userController.login);                                          // basic support
+
+// This URL ends the session of a user
+// Expects nothing
+// Returns a JSON of this form: { hasErrors: false, messages: [] }
+// in that JSON hasErrors is a boolean that states if there was an error
+// and messages is an array of string that has either error messages
+// or a message saying that the operation was successful
 app.post('/api/logout', checkSessionBeforeExec(userController.logout) );                // basic support
+
+// This URL ends the session of a user
+// Expects nothing
+// Returns a JSON of this form: { piDesc: 'piDescriptionString' }
+// in that JSON hasErrors is a boolean that states if there was an error
+// and messages is an array of string that has either error messages
+// or a message saying that the operation was successful
 app.post('/api/customer/genpicode', checkSessionBeforeExec(userController.genPiCode) ); // basic support
+
+// This URL ends the session of a user
+// Expects nothing
+// Returns a JSON array as the one shown below
+//[ {
+//    "stypeid": 1,
+//    "stypedesc": "Temperature"
+//},
+//{
+//    "stypeid": 2,
+//    "stypedesc": "Motion"
+//} ]
 app.get('/api/sensor/get/types', sensorController.getSensorTypes);
 
 // TODO implement app.get('/api/customer/get/summary/data', );
