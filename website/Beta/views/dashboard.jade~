@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HomeSense</title>
+    <script src="../lib/js/jquery.min.js"></script>
+    <script src="../lib/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/css/font-awesome.css">
+    <link rel="stylesheet" href="../styles/common.css">
+</head>
+<body>
+<main class="container">
+    <header class="bottom-border">
+        <a href="../index.html"><img src="../imgs/bannerLogo.png"></a>
+
+        <article class="dropdown navbar-right">
+            <button class="dropdown-toggle btn btn-default" data-toggle="dropdown">
+                <img src="../imgs/defaultUserImg.png">
+                <b class="caret"></b>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="../index.html">Sign out</a></li>
+            </ul>
+        </article>
+    </header>
+
+    <article class="jumbotron col-md-12">
+        <section class="col-md-10">
+            <a href="TemperatureDetail.html">
+                <button class="btn btn-default">
+                    <h3><label class="label label-default">
+                        <span>SensorName</span> <span>72</span>
+                    </label></h3>
+                    <h6>Outside Temp: <span>80</span></h6>
+                </button>
+            </a>
+        </section>
+		<section class="col-md-2">
+            <a href="PiManagement.html">
+                <button class="btn btn-default pull-right" data-bind="click: addPi">
+					<label>Add a Pi</label>
+                </button>
+            </a>
+        </section>
+        <section class="col-md-2">
+            <button class="btn btn-default pull-right">
+                <i class="fa fa-refresh"></i>
+                <label>Sync</label>
+            </button>
+
+            <section class="col-md-12">
+                <h3>Filters:</h3>
+                <label class="col-md-12 label label-default">Pi</label>
+                <div class="checkbox"></div>
+                <div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> My Pi
+                        </label>
+                    </div>
+                </div>
+
+                <label class="col-md-12 label label-default">Sensor Type</label>
+                <div class="checkbox"></div>
+                <div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Temperature
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Humidity
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Motion
+                        </label>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </article>
+
+    <footer>
+        &copy; HomeSense 2014
+    </footer>
+</main>
+<script src="../lib/js/knockout-3.js"></script>
+<script src="../clientLogic/dashboardVM.js"></script>
+</body>
+</html>
+
+   
+
