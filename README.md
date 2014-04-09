@@ -4,6 +4,9 @@ softwareEng
 Software Engineering project
 
 
+Heroku app URL
+============
+homesense.herokuapp.com
 
 Contact Info - please add your email
 ============
