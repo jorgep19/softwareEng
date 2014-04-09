@@ -22,7 +22,7 @@ app.get('/dbtest', checkSessionBeforeExec(sensorController.getSensorTypes) );
 
 // PI ROUTES
 app.post('/api/pi/verify', piController.verifyPi);                                      // basic support
-app.post('/api/pi/put/data', sensorControllerInstance.recordData);                      // working on
+// app.post('/api/pi/put/data', sensorControllerInstance.recordData);                      // working on
 
 // TODO implement app.post('/api/pi/update', );
 // TODO implement app.post('/api/pi/settings/update', );
