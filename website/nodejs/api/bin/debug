@@ -1,3 +1,0 @@
-#! /bin/bash 
-node-inspector --web-port=8081 & node --debug index.js
-
