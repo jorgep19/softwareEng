@@ -23,8 +23,6 @@ var constructor = function() {
             "$4)";
         var inserts = [ cusId, sensorData.sensorId, sensorData.value, sensorData.date ];
 
-        console.log(inserts);
-
         pg.connect( process.env.DATABASE_URL, function(err, client, done) {
             client.query(queryTemplate, inserts, function(err, result) {
                 done();
@@ -45,6 +43,21 @@ var constructor = function() {
             insertRow(data.userId, data.sensors[i], res);
         }
     };
+
+    sensorDataAccessorInstance.getTemperatureData = function (sensorId, sendResponse){
+        var queryTemplate = "SELECT sdatavalue, sdatarecordeddate FROM sensor S, sensor_data D " +
+            "WHERE S.sensid = D.sensid AND S.sensid = $1 AND stypeid = 1";
+        var inserts = [ sensorId ];
+
+        pg.connect( process.env.DATABASE_URL, function(err, client, done) {
+            client.query(queryTemplate, inserts, function(err, result) {
+                done();
+
+                sendResponse(err, result.rows)
+            });
+        });
+    };
+
 
     return sensorDataAccessorInstance;
 }

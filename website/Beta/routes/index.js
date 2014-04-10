@@ -81,16 +81,11 @@ app.post('/api/customer/genpicode', checkSessionBeforeExec(userController.genPiC
 
 // This URL ends the session of a user
 // Expects nothing
-// Returns a JSON array as the one shown below
-//[ {
-//    "stypeid": 1,
-//    "stypedesc": "Temperature"
-//},
-//{
-//    "stypeid": 2,
-//    "stypedesc": "Motion"
-//} ]
+// Returns a JSON array as the one shown below [ { "stypeid": 1, "stypedesc": "Temperature" }, { "stypeid": 2, "stypedesc": "Motion" } ]
 app.get('/api/sensor/get/types', sensorController.getSensorTypes);
 
+
+// This URL
+app.get('/api/get/temperature/data/:sensorId', sensorController.getTemperatureData);
+
 // TODO implement app.get('/api/customer/get/summary/data', );
-// TODO implement app.get('/api/get/temperature/data', );
