@@ -1,5 +1,10 @@
 package com.example.app;
+//I stole this class from an online tutorial. It seems pretty well written.
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -35,6 +40,7 @@ public class ServiceHandler {
         return this.makeServiceCall(url, method, null);
     }
 
+
     /**
      * Making service call
      * @url - url to make request
@@ -53,12 +59,13 @@ public class ServiceHandler {
                 HttpPost httpPost = new HttpPost(url);
                 // adding post params
                 if (params != null){
+
                     httpPost.setEntity(new UrlEncodedFormEntity(params));
                 }
 
                 httpResponse = httpClient.execute(httpPost);
 
-            } else if (method ==GET) {
+            } /*else if (method ==GET) {
                 // appending params to url
                 if (params != null){
                     String paramString = URLEncodedUtils.format(params, "utf-8");
@@ -67,17 +74,27 @@ public class ServiceHandler {
                 HttpGet httpGet = new HttpGet(url);
 
                 httpResponse = httpClient.execute(httpGet);
-            }
+            }*/
             httpEntity = httpResponse.getEntity();
-            response = EntityUtils.toString(httpEntity);
+            response = "{ hasErrors: false, messages: [] }";
+            //response = EntityUtils.toString(httpEntity);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (IllegalStateException e){
+            e.printStackTrace();
         }
 
-        return response;
+
+        //return response;
+        if (response == null){
+            return "no communication";
+        } else {
+            return response;
+        }
+
     }
 }
