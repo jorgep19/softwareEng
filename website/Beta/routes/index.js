@@ -21,8 +21,19 @@ app.get('/', function(req, res){ res.send('Server is running') });
 app.get('/dbtest', sensorController.getSensorTypes );
 
 // PI ROUTES
+
+// This URL creates a user account if possible
+// Expects a JSON of this form: { piCode: 19 }
+// Returns a JSON of this form: { hasErrors: false, messages: [], data: { piId: 21, userId: 19 } }
+// in that JSON hasErrors is a boolean that states if there was an error
+// and messages is an array of string that has either error messages
+// or a message saying that the operation was successful
 app.post('/api/pi/verify', piController.verifyPi);                                      // basic support
-// app.post('/api/pi/put/data', sensorControllerInstance.recordData);                      // working on
+
+// This URL creates a user account if possible
+// Expects a JSON of this form: { piCode: 19 }
+// Returns a log of the transaction that got executed
+//app.post('/api/pi/put/data', sensorControllerInstance.recordData);                      // working on
 
 // TODO implement app.post('/api/pi/update', );
 // TODO implement app.post('/api/pi/settings/update', );
