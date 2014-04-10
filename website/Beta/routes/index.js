@@ -31,9 +31,9 @@ app.get('/dbtest', sensorController.getSensorTypes );
 app.post('/api/pi/verify', piController.verifyPi);                                      // basic support
 
 // This URL creates a user account if possible
-// Expects a JSON of this form: { piCode: 19 }
+// Expects a JSON of this form: { userId: 19, sensors : [ { sensorId: 28, value: 12, date: '2014-04-07 17:50:52.9741'}, { sensorId: 28, value: 12, date: '2014-04-07 17:50:52.9741'} ] }
 // Returns a log of the transaction that got executed
-//app.post('/api/pi/put/data', sensorControllerInstance.recordData);                      // working on
+app.post('/api/pi/put/data', sensorController.recordSensorReadings);                      // working on
 
 // TODO implement app.post('/api/pi/update', );
 // TODO implement app.post('/api/pi/settings/update', );

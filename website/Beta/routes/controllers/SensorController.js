@@ -16,8 +16,10 @@ var constructor = function() {
         });
     };
 
-
-
+    sensorControllerInstance.recordSensorReadings = function(req, res) {
+        var data = { userId: 2, sensors : [ { sensorId: 1, value: 12, date: '2014-04-07 17:50:52.9741'}, { sensorId: 1, value: 21, date: '2014-04-07 17:50:52.9741'} ] };
+        sensorDA.recordSensorReadings(data, res, sensorDA.insertDataRow);
+    };
 
     return sensorControllerInstance;
 };

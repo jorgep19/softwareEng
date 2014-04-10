@@ -16,18 +16,23 @@ var constructor = function() {
     };
 
     sensorDataAccessorInstance.insertDataRow = function(cusId, sensorData, res){
-        var queryTemplate = "INSERT INTO sensor_data (cusID, sensID, sdataValue) VALUES (" +
+        var queryTemplate = "INSERT INTO sensor_data (cusID, sensID, sdataValue, sdatarecordeddate) VALUES (" +
             "$1," +
             "$2," +
-            "$3)";
-        var inserts = [ cusId, sensorData.sensID, sensorData.sdataValue ];
+            "$3," +
+            "$4)";
+        var inserts = [ cusId, sensorData.sensorId, sensorData.value, sensorData.date ];
+
+        console.log(inserts);
 
         pg.connect( process.env.DATABASE_URL, function(err, client, done) {
             client.query(queryTemplate, inserts, function(err, result) {
                 done();
 
+                console.log('saving:' + result);
+
                 if(err) {
-                    res.send("Shyt went wrong!")
+                    res.send("Something went wrong")
                 }
                 res.write("inserted data for sensor ID" + sensorData.sensID);
             });
@@ -36,9 +41,8 @@ var constructor = function() {
 
     sensorDataAccessorInstance.recordSensorReadings = function(data, res, insertRow) {
 
-        for(var i = 0; i < data.sensors.length; i++)
-        {
-            insertRow(data.cusID, data.sensors[i], res);
+        for(var i = 0; i < data.sensors.length; i++) {
+            insertRow(data.userId, data.sensors[i], res);
         }
     };
 
