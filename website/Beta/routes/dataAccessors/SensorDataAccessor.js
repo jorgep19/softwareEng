@@ -46,7 +46,8 @@ var constructor = function() {
 
     sensorDataAccessorInstance.getTemperatureData = function (sensorId, sendResponse){
         var queryTemplate = "SELECT sdatavalue, sdatarecordeddate FROM sensor S, sensor_data D " +
-            "WHERE S.sensid = D.sensid AND S.sensid = $1 AND stypeid = 1";
+            "WHERE S.sensid = D.sensid AND S.sensid = $1 AND stypeid = 1" +
+            "ORDER BY sdatarecordeddate DESC";
         var inserts = [ sensorId ];
 
         pg.connect( process.env.DATABASE_URL, function(err, client, done) {

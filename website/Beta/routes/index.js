@@ -42,9 +42,6 @@ app.post('/api/sensor/put/data', sensorController.recordSensorReadings);        
 // Returns a JSON of this form: { hasErrors: false, messages: [], sensors: [ { sensid: 1, stypeid: 1, sensdesc: "Garage_Temp" }, { sensid: 1, stypeid: 1, sensdesc: "Garage_Temp" } ]
 app.post('/api/pi/update',  piController.getSensorUpdate);
 
-
-// TODO implement app.post('/api/pi/settings/update', );
-
 // CLIENTS ROUTES
 // -------------------------------------------------------------------------------------
 // This URL creates a user account if possible
@@ -81,11 +78,13 @@ app.post('/api/customer/genpicode', checkSessionBeforeExec(userController.genPiC
 
 // This URL ends the session of a user
 // Expects nothing
-// Returns a JSON array as the one shown below [ { "stypeid": 1, "stypedesc": "Temperature" }, { "stypeid": 2, "stypedesc": "Motion" } ]
+// Returns a JSON of this form [ { "stypeid": 1, "stypedesc": "Temperature" }, { "stypeid": 2, "stypedesc": "Motion" } ]
 app.get('/api/sensor/get/types', sensorController.getSensorTypes);
 
 
-// This URL
+// This URL return the collection of all the data for an specific sensor
+// Expect a number with the sensor code at the end of the url
+// Returns a JSON of this form hasErrors: false, messages: [0], data: [ { sdatavalue: "12", sdatarecordeddate: "2014-04-07T21:50:52.974Z" }, { sdatavalue: "21", sdatarecordeddate: "2014-04-07T21:50:52.974Z" } ] }
 app.get('/api/get/temperature/data/:sensorId', sensorController.getTemperatureData);
 
 // TODO implement app.get('/api/customer/get/summary/data', );
