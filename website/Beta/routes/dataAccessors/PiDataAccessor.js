@@ -39,7 +39,22 @@ var constructor = function() {
 
             });
         });
-    }
+    };
+
+    piDataAccessorIntance.getSensorUpdate = function(piCode, sendResponse){
+        var queryTemplate = 'SELECT sensid, stypeid, sensdesc FROM sensor WHERE devid = $1';
+        var inserts = [piCode];
+
+        console.log
+
+        pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+            client.query(queryTemplate, inserts, function(err, result) {
+                done();
+
+                sendResponse(err, result.rows);
+            });
+        });
+    };
 
     return piDataAccessorIntance;
 }

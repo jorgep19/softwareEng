@@ -26,18 +26,46 @@ var constructor = function() {
                     response.hasErrors = true;
                     response.messages.push("Couldn't verify pi. Please verify your code.");
                 }
+
                 if(!response.hasErrors) {
                     response.data = data.piInfo;
                     response.hasErrors = false;
                     response.messages.push("Your pi has been verified :)");
-                    res.json(response);
-                };
+                }
 
+                res.json(response);
             });
         } else {
             res.json(response);
         }
     };
+
+    piControllerInstance.getSensorUpdate = function(req, res) {
+        var data = req.body;
+        var response = { hasErrors: false, messages: [] };
+
+        // TODO fully implement this validations
+        if(data.piCode && data.piCode.length === 0)
+        {
+            response.hasErrors = true;
+            response.messages.push("Pi Code is required");
+        }
+
+        if(!response.hasErrors) {
+            piDA.getSensorUpdate(data.piCode, function(err, data) {
+                if(err) {
+                    response.hasErrors = true;
+                    response.messages.push('Something went wrong');
+                } else {
+                    response.sensors = data;
+                }
+
+                res.json(response);
+            });
+        } else {
+            res.json(response);
+        }
+    }
 
     return piControllerInstance;
 };

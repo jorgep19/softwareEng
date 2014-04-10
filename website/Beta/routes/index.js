@@ -17,11 +17,12 @@ var checkSessionBeforeExec = function(requestHandler) {
 };
 
 // TEST ROUTES
+// -------------------------------------------------------------------------------------
 app.get('/', function(req, res){ res.send('Server is running') });
 app.get('/dbtest', sensorController.getSensorTypes );
 
 // PI ROUTES
-
+// -------------------------------------------------------------------------------------
 // This URL creates a user account if possible
 // Expects a JSON of this form: { piCode: 19 }
 // Returns a JSON of this form: { hasErrors: false, messages: [], data: { piId: 21, userId: 19 } }
@@ -33,13 +34,19 @@ app.post('/api/pi/verify', piController.verifyPi);                              
 // This URL creates a user account if possible
 // Expects a JSON of this form: { userId: 19, sensors : [ { sensorId: 28, value: 12, date: '2014-04-07 17:50:52.9741'}, { sensorId: 28, value: 12, date: '2014-04-07 17:50:52.9741'} ] }
 // Returns a log of the transaction that got executed
-app.post('/api/pi/put/data', sensorController.recordSensorReadings);                      // working on
+app.post('/api/sensor/put/data', sensorController.recordSensorReadings);                      // working on
 
-// TODO implement app.post('/api/pi/update', );
+
+// This URL provides an update for the pi sensors
+// Expects a JSON of this form: { piId: 21 }
+// Returns a JSON of this form: { hasErrors: false, messages: [], sensors: [ { sensid: 1, stypeid: 1, sensdesc: "Garage_Temp" }, { sensid: 1, stypeid: 1, sensdesc: "Garage_Temp" } ]
+app.post('/api/pi/update',  piController.getSensorUpdate);
+
+
 // TODO implement app.post('/api/pi/settings/update', );
 
 // CLIENTS ROUTES
-
+// -------------------------------------------------------------------------------------
 // This URL creates a user account if possible
 // Expects a JSON of this form: { email: 'dummie@foo.bar', password: '123' }
 // Returns a JSON of this form: { hasErrors: false, messages: [] }
