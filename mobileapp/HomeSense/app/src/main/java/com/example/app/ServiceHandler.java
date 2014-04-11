@@ -63,7 +63,7 @@ public class ServiceHandler {
                     httpPost.setEntity(new UrlEncodedFormEntity(params));
                 }
 
-                httpResponse = httpClient.execute(httpPost);
+                //httpResponse = httpClient.execute(httpPost);
 
             } /*else if (method ==GET) {
                 // appending params to url
@@ -75,14 +75,14 @@ public class ServiceHandler {
 
                 httpResponse = httpClient.execute(httpGet);
             }*/
-            httpEntity = httpResponse.getEntity();
+//            httpEntity = httpResponse.getEntity();
             response = "{ hasErrors: false, messages: [] }";
             //response = EntityUtils.toString(httpEntity);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-        } catch (ClientProtocolException e) {
+        } /*catch (ClientProtocolException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        }*/ catch (IOException e) {
             e.printStackTrace();
         } catch (IllegalStateException e){
             e.printStackTrace();
