@@ -2,3 +2,5 @@
 *.iml
 *.iws
 *.ipr
+
+npm-debug.log
