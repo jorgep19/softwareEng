@@ -32,10 +32,7 @@ module.exports = function(app) {
     // dashboard
     app.get('/dashboard', checkSessionBeforeExec(webRequestController.loadDashboard) );
     // logout
-    app.post('/logout', function(req, res){
-        delete req.session.userCode;
-        res.redirect('/');
-    })
+    app.get('/logout', checkSessionBeforeExec(webRequestController.logout));
 
     // PI API ROUTES
     // -------------------------------------------------------------------------------------
