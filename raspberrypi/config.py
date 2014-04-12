@@ -2,10 +2,10 @@ import requests
 import json
 # from update import updateSensors
 
-url = "http://10.136.46.30:8080/api/pi/verify"
+url = "http://homesense.herokuapp.com/api/pi/verify"
 input = input("Enter code from website: ");
 
-input_info = {"code":input}
+input_info = {"piCode":input}
 user_data = requests.post(url, data=input_info)
 # user_data = requests.urlopen(url)
 # user = json.loads(user_data.readall().decode('utf-8'))
