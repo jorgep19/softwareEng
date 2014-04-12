@@ -12,11 +12,7 @@ user_data = requests.post(url, data=input_info)
 
 print(user_data.text)
 f = open('user.json', 'w')
-f.write(user_data.text)
-
-#update.UpdateSensors()
-
-# with open('user.json', 'w') as outfile:
-#   outfile.write(user_data.text, outfile)
-
-# updateSensors(user['api_version']);
+user_json= user_data.json()
+f.write(json.dumps(user_json["data"]))
+        
+f.close()
