@@ -7,7 +7,6 @@ var app = require('../app.js'),
 var checkSessionBeforeExec = function(requestHandler) {
 
     return function(req, res) {
-
         if(!req.session.userCode) {
             res.send('You must login first');
         } else {
@@ -18,8 +17,22 @@ var checkSessionBeforeExec = function(requestHandler) {
 
 // TEST ROUTES
 // -------------------------------------------------------------------------------------
-app.get('/', function(req, res){ res.send('Server is running') });
 app.get('/dbtest', sensorController.getSensorTypes );
+
+// PAGE ROUTS
+app.get('/', function(req, res){
+    res.render('index');
+});
+
+app.get('/signup', function(req, res){
+    res.render('signup');
+});
+
+app.get('/dashboard', function(req, res){
+    console.log('about to load the dashboard');
+    res.render('dashboard');
+});
+
 
 // PI ROUTES
 // -------------------------------------------------------------------------------------

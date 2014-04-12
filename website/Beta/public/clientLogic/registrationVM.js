@@ -19,11 +19,10 @@ RegistrationVM.prototype.createAccount = function(){
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/api/customer/register",
+        url: "http://localhost:5000/api/customer/register",
         data: { email : self.email(), password: self.password }
-    }).done( function(){
-            self.successFeedback(true); });
-             window.location = "dashboard.html";
+    });
+
 };
 
 ko.applyBindings(new RegistrationVM());
