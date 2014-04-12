@@ -92,11 +92,11 @@ public class MainActivity extends ActionBarActivity {
         Toast.makeText(this, "Errors Found:  " + TOKEN,
                 Toast.LENGTH_SHORT).show();
 
-        /*if (TOKEN != null) {
+        if (TOKEN != null) {
             Intent intent = new Intent(this, HomeScreen.class);
             intent.putExtra(TOKEN_MESSAGE, TOKEN);
             startActivity(intent);
-        }*/
+        }
     }
 
     private class Login extends AsyncTask<Void, Void, Void> {
@@ -129,6 +129,7 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected void onPreExecute(){
             checkInternetConnection();
+            TOKEN = "shit";
         }
 
         @Override
@@ -141,23 +142,22 @@ public class MainActivity extends ActionBarActivity {
 
             userInfo.add(new BasicNameValuePair("theString", loginJson));
 
-            //BasicNameValuePair userInfo = new BasicNameValuePair("theString", loginJson);
+
 
             ServiceHandler sh = new ServiceHandler();
 
             String jsonString = sh.makeServiceCall(LOGIN_URL, sh.POST, userInfo );
 
-            TOKEN = "Shit";
-
+            String hasErrors = "Cunt";
+/*
             try{
                 JSONObject json = new JSONObject(jsonString);
-                String hasErrors = json.getString("hasErrors");
-                TOKEN = hasErrors;
+                hasErrors = json.getString("hasErrors");
             }catch (JSONException e){
                 e.printStackTrace();
             }
-
-
+*/
+            TOKEN = hasErrors;
 
             //jsonToken="dummy";
             //Once schema for response to login is available, parse JSON to get token
@@ -198,6 +198,11 @@ public class MainActivity extends ActionBarActivity {
                 return null;
             }*/
         }
+/*
+        @Override
+        protected void onPostExecute(String result){
+            TOKEN = "bitch";
+        }*/
     }
 
 }
