@@ -13,13 +13,14 @@ block mainContent
                 input.form-control(type='email', placeholder='Email address', required='', name='email')
                 input.form-control(type='password', placeholder='Password', required='', name='password')
                 // TODO add client side logic validation for the password re-type
-                input.form-control(type='password', placeholder='re-type Password')
+                input.form-control(type='password', placeholder='re-type Password', name='passwordRetype')
                 button.btn.btn-lg.btn-primary.btn-block(type="submit") Create account
 
-            // TODO add messages
-            // message area
-            // .alert.alert-success(data-bind='visible: successFeedback')
-            //      span Account successfully created
+            if data.hasErrors
+                .alert.alert-danger
+                    ul
+                        each message in data.messages
+                            li #{ message }
 
         // social
         section.col-md-6

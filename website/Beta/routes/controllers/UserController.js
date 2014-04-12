@@ -20,10 +20,13 @@ var constructor = function() {
             result.messages.push("Password is required");
         }
 
+        if(data.password !== data.passwordRetype){
+            result.hasErrors = true;
+            result.messages.push("Password and retype don't match");
+        }
+
         if(!result.hasErrors) {
-            console.log('going to the data accessor')
-            userDA.registerUser(data, function(err) {
-                console.log('got back from data accessor with:' + err);
+            userDA.registerUser(data, function(err, userId) {
 
                 if(err && err.code == 23505)
                 {
@@ -34,6 +37,7 @@ var constructor = function() {
                     result.messages.push("something went wrong");
                 } else {
                     result.messages.push("Account for " + data.email + "successfully created");
+                    result.userId = userId;
                 }
 
                 responseHandler(result);
