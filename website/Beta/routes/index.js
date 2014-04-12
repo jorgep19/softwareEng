@@ -4,7 +4,8 @@ module.exports = function(app) {
     var userController = require('./controllers/UserController.js'),
         piController = require('./controllers/PiController.js'),
         sensorController = require('./controllers/SensorController.js'),
-        webRequestController = require('./controllers/WebRequestController.js');
+        webRequestController = require('./controllers/WebRequestController.js'),
+        apiRequestController = require('./controllers/ApiRequestController.js');
 
     // 'middleware' for routes that require to be logged in
     var checkSessionBeforeExec = function(requestHandler) {
@@ -30,7 +31,7 @@ module.exports = function(app) {
     // dashboard
     app.get('/dashboard', webRequestController.loadDashboard);
 
-    // PI ROUTES
+    // PI API ROUTES
     // -------------------------------------------------------------------------------------
     // This URL creates a user account if possible
     // Expects a JSON of this form: { piCode: 19 }
@@ -51,15 +52,15 @@ module.exports = function(app) {
     // Returns a JSON of this form: { hasErrors: false, messages: [], sensors: [ { sensid: 1, stypeid: 1, sensdesc: "Garage_Temp" }, { sensid: 1, stypeid: 1, sensdesc: "Garage_Temp" } ]
     app.post('/api/pi/update',  piController.getSensorUpdate);
 
-    // CLIENTS ROUTES
+    // CLIENTS API ROUTES
     // -------------------------------------------------------------------------------------
     // This URL creates a user account if possible
-    // Expects a JSON of this form: { email: 'dummie@foo.bar', password: '123' }
+    // Expects a JSON of this form: { email: 'dummie@foo.bar', password: '123', passwordRetype: '123' }
     // Returns a JSON of this form: { hasErrors: false, messages: [] }
     // in that JSON hasErrors is a boolean that states if there was an error
     // and messages is an array of string that has either error messages
     // or a message saying that the operation was successful
-    // app.post('/api/customer/register', userController.registerUser);                        // basic support
+    app.post('/api/customer/register', apiRequestController.registerUser);                        // basic support
 
     // This URL starts session
     // Expects a JSON of this form: { email: 'dummie@foo.bar', password: '123' }
