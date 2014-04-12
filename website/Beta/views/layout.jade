@@ -10,9 +10,11 @@ html
     body
         main.container
             header.bottom-border
-                a(href='#')
-                    img(src='/imgs/bannerLogo.png')
-                block headerContent
+                .container-fluid
+                    .navbar-header
+                        a(href='#')
+                            img(src='/imgs/bannerLogo.png')
+                    block headerContent
 
             block mainContent
 

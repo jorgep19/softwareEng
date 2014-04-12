@@ -47,6 +47,7 @@ var constructor = function() {
     userControllerInstance.login = function(req, res){
         var response = { hasErrors: false, messages: [] };
         var data = req.body;
+        console.log(data);
 
         // TODO fully implement this validations
         if(data.email.length === 0)

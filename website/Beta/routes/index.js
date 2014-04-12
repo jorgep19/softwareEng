@@ -47,7 +47,7 @@ app.post('/api/pi/verify', piController.verifyPi);                              
 // This URL creates a user account if possible
 // Expects a JSON of this form: { userId: 19, sensors : [ { sensorId: 28, value: 12, date: '2014-04-07 17:50:52.9741'}, { sensorId: 28, value: 12, date: '2014-04-07 17:50:52.9741'} ] }
 // Returns a log of the transaction that got executed
-app.post('/api/sensor/put/data', sensorController.recordSensorReadings);                      // working on
+app.post('/api/sensor/put/data', sensorController.recordSensorReadings);                // basic support
 
 
 // This URL provides an update for the pi sensors
