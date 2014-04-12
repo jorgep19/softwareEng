@@ -17,7 +17,7 @@ homesense=> \dt                                                                 
  public | sensor_type       | table | homesense
 (9 rows)
 
-</pre>
+
 
 
 == Example of data:
@@ -56,4 +56,4 @@ select * from Sensor;
        2 |     1 |      1 | 25         | 2014-04-13 01:32:36.276651
        3 |     1 |      1 | 30         | 2014-04-13 01:32:50.408777
 
-
+</pre>
