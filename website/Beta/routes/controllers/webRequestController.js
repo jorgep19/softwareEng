@@ -6,11 +6,20 @@ var constructor = function() {
     var sensorController = require('./SensorController.js');
 
     webRequestControllerInstance.loadHomePage = function(req, res){
-        res.render('index');
+        res.render('index', { messages: req.flash('info') });
     };
 
     webRequestControllerInstance.loadSignup = function(req, res){
         res.render('signup');
+    };
+    webRequestControllerInstance.signupUser = function(req, res){
+        var result = userController.signupUser(req.body);
+        if(result.hasErrors) {
+            req.flash('info', result.messages);
+            webRequestControllerInstance.loadSignup(req, res);
+        } else {
+            res.redirect('/dashboard');
+        }
     };
 
     webRequestControllerInstance.loadDashboard = function(req, res){

@@ -19,7 +19,7 @@ var constructor = function() {
     };
 
     // insert a user row without user data
-    customerDataAccessorInstance.registerUser = function(data, response, sendResponse) {
+    customerDataAccessorInstance.registerUser = function(data, sendResponse) {
 
         var queryTemplate = "INSERT INTO customer " +
             "(cusFirst, cusLast, cusEmail, cusPassword) " +
