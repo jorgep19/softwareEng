@@ -13,13 +13,17 @@ var constructor = function() {
         res.render('signup');
     };
     webRequestControllerInstance.signupUser = function(req, res){
-        var result = userController.signupUser(req.body);
-        if(result.hasErrors) {
-            req.flash('info', result.messages);
-            webRequestControllerInstance.loadSignup(req, res);
-        } else {
-            res.redirect('/dashboard');
-        }
+        var result = { hasErrors: false, messages: [] };
+
+        userController.signupUser(req.body, result, function(responseResult){
+
+            if(responseResult.hasErrors) {
+                req.flash('info', responseResult);
+                webRequestControllerInstance.loadSignup(req, res);
+            } else {
+                res.redirect('/dashboard');
+            }
+        });
     };
 
     webRequestControllerInstance.loadDashboard = function(req, res){

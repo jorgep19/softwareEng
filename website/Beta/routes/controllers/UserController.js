@@ -4,8 +4,7 @@ var constructor = function() {
     var userDA = require('../dataAccessors/UserDataAccessor.js');
 
     // Creates the user account
-    userControllerInstance.signupUser = function (data) {
-        var result = { hasErrors: false, messages: [] };
+    userControllerInstance.signupUser = function (data, result, responseHandler) {
 
         // TODO fully implement this validations
         if(data.email && data.email.length === 0)
@@ -37,10 +36,10 @@ var constructor = function() {
                     result.messages.push("Account for " + data.email + "successfully created");
                 }
 
-                return result;
+                responseHandler(result);
             });
         } else {
-            return result;
+            responseHandler(result);
         }
     };
 

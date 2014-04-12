@@ -103,11 +103,26 @@ module.exports = function(app) {
 
     var webRequestController = require('./controllers/WebRequestController.js');
 
+    // 'middleware' for routes that require to be logged in
+    var checkSessionBeforeExec = function(requestHandler) {
+
+        return function(req, res) {
+            if(!req.session.userCode) {
+                res.send('You must login first');
+            } else {
+                requestHandler(req, res);
+            }
+        };
+    };
+
     // home page
     app.get('/', webRequestController.loadHomePage);
 
     // signup page
     app.get('/signup', webRequestController.loadSignup);
     app.post('/signup', webRequestController.signupUser);
+
+    // dashboard
+    app.get('/dashboard', webRequestController.loadDashboard);
 }
 
