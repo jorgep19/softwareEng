@@ -4,43 +4,46 @@ var constructor = function() {
     var userDA = require('../dataAccessors/UserDataAccessor.js');
 
     // Creates the user account
-    userControllerInstance.registerUser = function (req, res) {
-        var response = { hasErrors: false, messages: [] };
+    userControllerInstance.signupUser = function (data, result, responseHandler) {
 
         // TODO fully implement this validations
         if(data.email && data.email.length === 0)
         {
-            response.hasErrors = true;
-            response.messages.push("Email is required");
+            result.hasErrors = true;
+            result.messages.push("Email is required");
         }
 
         // TODO fully implement this validations
         if(data.password && data.password.length === 0)
         {
-            response.hasErrors = true;
-            response.messages.push("Password is required");
+            result.hasErrors = true;
+            result.messages.push("Password is required");
         }
 
-        if(!response.hasErrors) {
-            console.log('going to the data accessor')
-            userDA.registerUser(data, response, function(err) {
-                console.log('got back from data accessor with:' + err);
+        if(data.password !== data.passwordRetype){
+            result.hasErrors = true;
+            result.messages.push("Password and retype don't match");
+        }
+
+        if(!result.hasErrors) {
+            userDA.registerUser(data, function(err, userId) {
 
                 if(err && err.code == 23505)
                 {
-                    response.hasErrors = true;
-                    response.messages.push("An account for " + data.email + " already exists");
+                    result.hasErrors = true;
+                    result.messages.push("An account for " + data.email + " already exists");
                 } else if(err) {
-                    response.hasErrors = true;
-                    response.messages.push("something went wrong");
+                    result.hasErrors = true;
+                    result.messages.push("something went wrong");
                 } else {
-                    response.messages.push("Account for " + data.email + "successfully created");
+                    result.messages.push("Account for " + data.email + "successfully created");
+                    result.userId = userId;
                 }
 
-                res.json(response);
+                responseHandler(result);
             });
         } else {
-            res.json(response);
+            responseHandler(result);
         }
     };
 
