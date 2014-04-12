@@ -1,7 +1,10 @@
 var app = require('../app.js'),
     userController = require('./controllers/UserController.js'),
     piController = require('./controllers/PiController.js'),
-    sensorController = require('./controllers/SensorController.js');
+    sensorController = require('./controllers/SensorController.js'),
+    webRequestController = require('./controllers/WebRequestController.js'),
+    apiRequestController = require('./controllers/ApiRequestController.js');
+
 
 // 'middleware' for routes that require to be logged in
 var checkSessionBeforeExec = function(requestHandler) {
@@ -19,19 +22,13 @@ var checkSessionBeforeExec = function(requestHandler) {
 // -------------------------------------------------------------------------------------
 app.get('/dbtest', sensorController.getSensorTypes );
 
+
 // PAGE ROUTS
-app.get('/', function(req, res){
-    res.render('index');
-});
+app.get('/', webRequestController.loadHomePage);
 
-app.get('/signup', function(req, res){
-    res.render('signup');
-});
+app.get('/signup', webRequestController.loadSignup);
 
-app.get('/dashboard', function(req, res){
-    console.log('about to load the dashboard');
-    res.render('dashboard');
-});
+app.get('/dashboard', webRequestController.loadDashboard);
 
 
 // PI ROUTES

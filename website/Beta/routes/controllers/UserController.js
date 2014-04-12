@@ -5,8 +5,6 @@ var constructor = function() {
 
     // Creates the user account
     userControllerInstance.registerUser = function (req, res) {
-
-        var data = req.body;
         var response = { hasErrors: false, messages: [] };
 
         // TODO fully implement this validations
@@ -24,7 +22,10 @@ var constructor = function() {
         }
 
         if(!response.hasErrors) {
+            console.log('going to the data accessor')
             userDA.registerUser(data, response, function(err) {
+                console.log('got back from data accessor with:' + err);
+
                 if(err && err.code == 23505)
                 {
                     response.hasErrors = true;
@@ -71,7 +72,7 @@ var constructor = function() {
                     req.session.userCode = rows[0].cusid;
                     response.hasErrors = false;
                     response.messages.push("Logged in as " + data.email);
-                    res.render('dashboard');
+                    res.redirect('/foo/bar');
                 } else {
                     response.hasErrors = true;
                     response.messages.push("Didn't find account for " + data.email);
