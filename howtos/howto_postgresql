@@ -1,0 +1,7 @@
+
+https://wiki.debian.org/PostgreSql
+
+
+select table_schema, table_name from information_schema.tables where table_schema = 'homesense';
+
+
