@@ -6,3 +6,6 @@ website/Alphas/
 .gitignore
 
 npm-debug.log
+
+website/Beta/bin/run
+

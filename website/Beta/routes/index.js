@@ -34,6 +34,10 @@ module.exports = function(app) {
     // logout
     app.get('/logout', checkSessionBeforeExec(webRequestController.logout));
 
+
+   // settings
+   app.get('/settings', webRequestController.loadSettings);
+
     // PI API ROUTES
     // -------------------------------------------------------------------------------------
     // This URL creates a user account if possible
