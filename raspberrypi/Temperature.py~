@@ -7,4 +7,5 @@ def getTemperature():
 	temperature = temperature / 1000 *9.0 /5.0 +32
 	return temperature
 
+
 print (getTemperature(), 'C')
