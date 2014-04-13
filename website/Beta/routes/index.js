@@ -45,14 +45,14 @@ module.exports = function(app) {
     app.post('/api/pi/verify', piController.verifyPi);                                      // basic support
 
     // This URL creates a user account if possible
-    // Expects a JSON of this form: { userId: 19, sensors : [ { sensorId: 28, value: 12, date: '2014-04-07 17:50:52.9741'}, { sensorId: 28, value: 12, date: '2014-04-07 17:50:52.9741'} ] }
+    // Expects a JSON of this form: { userId: 1, sensors : [ { sensorId: 1, value: 12, date: '2014-04-07 17:50:52.9741'}, { sensorId: 1, value: 12, date: '2014-04-07 17:50:52.9741'} ] }
     // Returns a log of the transaction that got executed
     app.post('/api/sensor/put/data', sensorController.recordSensorReadings);                // basic support
 
 
     // This URL provides an update for the pi sensors
     // Expects a JSON of this form: { piId: 21, userId: 19 }
-    // Returns a JSON of this form: { hasErrors: false, messages: [], sensors: [ { sensid: 1, stypeid: 1, sensdesc: "Garage_Temp" }, { sensid: 1, stypeid: 1, sensdesc: "Garage_Temp" } ]
+    // Returns a JSON of this form: { hasErrors: false, messages: [], sensors: [ { sensid: 1, stypeid: 1, sensdesc: "Garage_Temp" }, { sensid: 1, stypeid: 1, sensdesc: "Garage_Temp" } ] }
     app.post('/api/pi/update',  piController.getSensorUpdate);                             //  basic support
 
     // CLIENTS API ROUTES
