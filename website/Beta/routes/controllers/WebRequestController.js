@@ -25,7 +25,7 @@ var constructor = function() {
             if(responseResult.hasErrors) {
                 req.flash('login-has-erros', 'there are errors');
                 req.flash('login-messages', responseResult.messages);
-                webRequestControllerInstance.loadHomePage(req, res);
+                res.redirect('/');
             } else {
                 req.session.userId = responseResult.userId;
                 res.redirect('/dashboard');
@@ -61,16 +61,30 @@ var constructor = function() {
         });
     };
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Dashboard page methods
+    // -----------------------------------------------------------------------------------------------------------------
+
     webRequestControllerInstance.loadDashboard = function(req, res){
         console.log('about to load the dashboard for:' + req.session.userId);
         res.render('dashboard');
     };
 
-   webRequestControllerInstance.loadSettings = function(req, res) {
-      console.log('loading /settings page')
-      res.render('settings')
-   };
+    // -----------------------------------------------------------------------------------------------------------------
+    // Settings page methods
+    // -----------------------------------------------------------------------------------------------------------------
+    webRequestControllerInstance.loadSettings = function(req, res) {
+        console.log('loading /settings page')
+        res.render('settings')
+    };
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // User Menu methods
+    // -----------------------------------------------------------------------------------------------------------------
+    webRequestControllerInstance.logout = function(req, res){
+        req.session.userId = undefined;
+        res.redirect('/');
+    };
 
     return webRequestControllerInstance;
 };
