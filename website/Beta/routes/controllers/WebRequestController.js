@@ -66,6 +66,12 @@ var constructor = function() {
         res.render('dashboard');
     };
 
+   webRequestControllerInstance.loadSettings = function(req, res) {
+      console.log('loading /settings page')
+      res.render('settings')
+   };
+
+
     return webRequestControllerInstance;
 };
 

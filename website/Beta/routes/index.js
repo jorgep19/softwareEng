@@ -32,6 +32,10 @@ module.exports = function(app) {
     // dashboard
     app.get('/dashboard', webRequestController.loadDashboard);
 
+
+   // settings
+   app.get('/settings', webRequestController.loadSettings);
+
     // PI API ROUTES
     // -------------------------------------------------------------------------------------
     // This URL creates a user account if possible
