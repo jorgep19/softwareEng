@@ -34,7 +34,7 @@ module.exports = function(app) {
 
     // add pi
     app.get('/addpi', checkSessionBeforeExec(webRequestController.loadAppPi) );
-    app.get('/')
+    app.get('/addpi', checkSessionBeforeExec(webRequestController.addPiToLoggedInUser))
 
 
     // logout
