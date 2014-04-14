@@ -80,24 +80,24 @@ var constructor = function() {
         var response = { hasErrors: false, messages: [] };
 
         if(!data.userId) {
-            response.errors.push( 'There was problem with your session please log in again.' );
+            response.messages.push( 'There was problem with your session please log in again.' );
             response.hasErrors = true;
         }
 
         if(!data.piName) {
-            response.errors.push( 'The Pi needs name' );
+            response.messages.push( 'The Pi needs name' );
             response.hasErrors = true;
         }
 
         for(var i = 0; i < data.sensors.length; i++) {
             if ( !data.sensors[i].sensorDesc ) {
-                response.errors.push( 'All sensors must have a name' );
+                response.messages.push( 'All sensors must have a name' );
                 response.hasErrors = true;
                 break;
             }
 
             if ( !data.sensors[i].sensorType ) {
-                response.errors.push( 'All sensors must have a name' );
+                response.messages.push( 'All sensors must have a name' );
                 response.hasErrors = true;
                 break;
             }
@@ -113,14 +113,14 @@ var constructor = function() {
                     responseHandler(response);
                 } else {
 
-                    sensorDA.registerSensors(data.userId, piInsertData.piId, data.sensors, function(err, data) {
+                    sensorDA.registerSensors(data.userId, piInsertData.piId, data.sensors, function(err, sensorInsertData) {
                         if(err) {
                             response.hasErrors = true;
                             response.messages.push('Something went wrong');
                             responseHandler(response);
                         } else {
-                            // create return data object
-                            responseHandler(response);
+                            var dataToReturn = { piDesc: piInsertData.piDesc, sensors: sensorInsertData };
+                            responseHandler(response, dataToReturn);
                         }
                     });
                 }

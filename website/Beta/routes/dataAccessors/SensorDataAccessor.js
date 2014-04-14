@@ -85,7 +85,7 @@ var constructor = function() {
                         console.log('count = ' + count);
                         if (count == sensors.length) {
                             client.end();
-                            sendData(sensorDataInserted);
+                            sendData(undefined, sensorDataInserted);
                         }
                     });
             }

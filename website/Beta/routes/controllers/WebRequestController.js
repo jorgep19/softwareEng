@@ -81,14 +81,14 @@ var constructor = function() {
         var data  = req.body;
         data.userId = req.session.userId;
 
-        piController.registerPiForUser(data, function(responseResult) {
+        piController.registerPiForUser(data, function(responseResult, data) {
 
             if(responseResult.hasErrors) {
                 req.flash('signup-has-erros', 'there are errors');
                 req.flash('signup-messages', responseResult.messages);
                 res.redirect('/');
             } else {
-                res.send('successfully saved :)');
+                res.json(data);
             }
             // problem send to home page and be like oh fuck
             // take to the code page and ask to verify
