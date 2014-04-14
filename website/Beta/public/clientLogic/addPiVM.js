@@ -6,16 +6,10 @@ function SensorVM() {
     self.getData = function() {
         return {
             sensorDesc: self.name(),
-            sensorType: self.type().value
+            sensorType: parseInt(self.type().value)
         }
     }
 }
-
-// function ErrorMessageVM(error){
-    // var self = this;
-
-    // self.message = ko.observable(error);
-// }
 
 function AddPiVM() {
     var self = this;
@@ -55,7 +49,7 @@ function AddPiVM() {
         }
 
         return {
-            sensorName: self.name(),
+            piName: self.name(),
             sensors: sensorsData
         }
     }
@@ -79,7 +73,13 @@ function AddPiVM() {
 
         if( !self.hasErrors() ) {
             console.log(self.getData());
-            alert(self.getData())
+
+            $.ajax({
+                type: "POST",
+                url: 'http://localhost:5000/addpi',
+                data: self.getData()
+            });
+
         } else {
             console.log(self.errors)
         }

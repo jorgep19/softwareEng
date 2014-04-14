@@ -77,6 +77,24 @@ var constructor = function() {
         res.render('addPi');
     };
 
+    webRequestControllerInstance.addPiToLoggedInUser = function(req, res) {
+        var data  = req.body;
+        data.userId = req.session.userId;
+
+        piController.registerPiForUser(data, function(responseResult) {
+
+            if(responseResult.hasErrors) {
+                req.flash('signup-has-erros', 'there are errors');
+                req.flash('signup-messages', responseResult.messages);
+                res.redirect('/');
+            } else {
+                res.send('successfully saved :)');
+            }
+            // problem send to home page and be like oh fuck
+            // take to the code page and ask to verify
+        });
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     // Settings page methods
     // -----------------------------------------------------------------------------------------------------------------
