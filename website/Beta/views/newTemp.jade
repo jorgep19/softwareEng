@@ -55,15 +55,15 @@ head
     script(type='text/javascript', language='javascript', src='jquery.flot.axislabels.js')
 	
 	script
-		var JSONTemp = '{"temp1" : 56, "temp2" : 60, "temp3" : 61, "temp4" : 59, "temp5" : 61, "temp6" : 60, "temp7" : 58}';
+		var JSONTemp = app.get('/api/get/temperature/data/:sensorId', sensorController.getTemperatureData);
 
 			
 			
-		var json = JSON.parse(JSONTemp);
+		
 		//alert(json.name);
 
 
-		var d1 = [[8, json.temp1], [10, json.temp2], [12, json.temp3], [14, json.temp4], [16, json.temp5],[18,json.temp6], [20,json.temp7]];
+		var d1 = [[8, JSONTemp[0].sdatavalue], [10, JSONTemp[1].sdatavalue], [12, JSONTemp[2].sdatavalue], [14, JSONTemp[3].sdatavalue], [16, JSONTemp[4].sdatavalue],[18,json.temp6], [20,json.temp7]];
 
 
 		//var d1 = [[8, 55], [10, 57], [12, 63], [14, 68], [16, 70],[18,67], [20,60]];
