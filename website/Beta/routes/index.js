@@ -34,7 +34,7 @@ module.exports = function(app) {
 
     // add pi
     app.get('/addpi', checkSessionBeforeExec(webRequestController.loadAppPi) );
-    // { sensorName: 'mah pi', sensors: [ { sensorDesc: 'mah sensor', sensorType: '1' } ] }
+    // { piName: 'mah pi', sensors: [ { sensorDesc: 'mah sensor', sensorType: '1' } ] }
     app.post('/addpi', checkSessionBeforeExec(webRequestController.addPiToLoggedInUser));
     app.get('/piadded', checkSessionBeforeExec(webRequestController.loadPiAdded));
 
@@ -142,11 +142,12 @@ module.exports = function(app) {
 
     // This URL ends the session of a user
     // Expects nothing
-    // Returns a JSON of this form: { piDesc: 'piDescriptionString' }
+    // Returns a JSON of this form: { piName: 'mah pi', sensors: [ { sensorDesc: 'mah sensor', sensorType: '1' } ] }
     // in that JSON hasErrors is a boolean that states if there was an error
     // and messages is an array of string that has either error messages
-    // or a message saying that the operation was successful
-    // TODO conver to tree  used in the web request app.post('/api/customer/genpicode', checkSessionBeforeExec(userController.genPiCode) ); // basic support
+    // or a message saying that the operation was successful and data
+    // { piDesc: 'pi name', piCode: 70, sensors: [ { sensorDesc: 'sensorName', sensorType: 'Temperature' }, { sensorDesc: 'sensorName', sensorType: 'Motion' } ] }
+    app.post('/api/customer/genpicode', checkSessionBeforeExec(apiRequestController.registerPi) );
 
     // This URL ends the session of a user
     // Expects nothing

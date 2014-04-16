@@ -13,6 +13,16 @@ var constructor = function() {
         });
     };
 
+    ApiRequestControllerInstance.registerPi = function(req, res) {
+        var data  = req.body;
+        data.userId = req.session.userId;
+
+        piController.registerPiForUser(data, function(responseResult) {
+            res.json(responseResult);
+        });
+    };
+
+
     ApiRequestControllerInstance.login = function(req, res) {
         var result = { hasErrors: false, messages: [] };
 
