@@ -91,8 +91,54 @@ module.exports = function(app) {
     // or a message saying that the operation was successful
     app.post('/api/logout', checkSessionBeforeExec(userController.logout) );                // basic support
 
-
-    app.post('/api/customer/get/summary/data', checkSessionBeforeExec(apiRequestController.getUserDataSummary) );
+    // This URL ends the session of a user
+    // Expects a JSON of this form: { userId: 19 }
+    // Returns a JSON of this form: {
+    //    "hasErrors": false,
+    //        "messages": [ "Data successfully retrieved for user:1" ],
+    //        "data": [
+    //        {
+    //            "id": 1,
+    //            "desc": "Garage_PI",
+    //            "active": true,
+    //            "sensorsReadings": [
+    //                {
+    //                    "id": 1,
+    //                    "desc": "Garage_Temp",
+    //                    "type": "Temperature",
+    //                    "value": "20",
+    //                    "timestamp": "2014-04-11T21:50:52.974Z"
+    //                },
+    //                {
+    //                    "id": 40,
+    //                    "desc": "other sensor",
+    //                    "type": "Motion",
+    //                    "value": "12",
+    //                    "timestamp": "2014-04-16T18:57:02.759Z"
+    //                }
+    //            ]
+    //        },
+    //        {
+    //            "id": 1,
+    //            "desc": "Office pi",
+    //            "active": true,
+    //            "sensorsReadings": [
+    //                {
+    //                    "id": 40,
+    //                    "desc": "other sensor",
+    //                    "type": "Motion",
+    //                    "value": "12",
+    //                    "timestamp": "2014-04-16T18:57:02.759Z"
+    //                }
+    //            ]
+    //        }
+    //
+    //    ]
+    //}
+    // in that JSON hasErrors is a boolean that states if there was an error
+    // and messages is an array of string that has either error messages
+    // or a message saying that the operation was successful
+    app.post('/api/customer/get/summary/data', checkSessionBeforeExec(apiRequestController.getUserDataSummary) );       //basic support
 
     // This URL ends the session of a user
     // Expects nothing
