@@ -1,0 +1,10 @@
+include userMenuMixin
+extends layout
+
+block headerContent
+    // logged in user menu
+    +userMenuMixin(null)
+
+block mainContent
+    p pi added
+    p #{ data }
