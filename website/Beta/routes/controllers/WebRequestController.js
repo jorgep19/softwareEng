@@ -96,8 +96,7 @@ var constructor = function() {
 
     webRequestControllerInstance.loadPiAdded = function(req, res) {
         var data = req.flash('new-pi-data');
-        console.log(data);
-        res.render('piAdded', data);
+        res.render('piAdded', { data: data[0] } );
     }
 
     // -----------------------------------------------------------------------------------------------------------------

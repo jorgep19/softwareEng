@@ -6,5 +6,27 @@ block headerContent
     +userMenuMixin(null)
 
 block mainContent
-    p pi added
-    p #{ data }
+    .jumbotron
+        .alert.alert-success
+            span
+                i #{data.piDesc}
+                | was succesfully added to your account!
+        .alert.alert-warning
+            span
+                | Please verify
+                i #{data.piDesc}
+                | to start logging data from you by entering this code:
+                b #{data.piCode}
+                | on the pi console app.
+
+        h2 Your pi has this sensors:
+        ul
+            each s in data.sensors
+                li
+                    span
+                        i #{s.sensorDesc}
+                        | which it a #{s.sensorType} sensor
+        a(href='/dashboard')
+            button.btn.btn-default
+                label Done
+
