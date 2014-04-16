@@ -91,13 +91,16 @@ module.exports = function(app) {
     // or a message saying that the operation was successful
     app.post('/api/logout', checkSessionBeforeExec(userController.logout) );                // basic support
 
+
+    app.post('/api/customer/get/summary/data', checkSessionBeforeExec(apiRequestController.getUserDataSummary) );
+
     // This URL ends the session of a user
     // Expects nothing
     // Returns a JSON of this form: { piDesc: 'piDescriptionString' }
     // in that JSON hasErrors is a boolean that states if there was an error
     // and messages is an array of string that has either error messages
     // or a message saying that the operation was successful
-    app.post('/api/customer/genpicode', checkSessionBeforeExec(userController.genPiCode) ); // basic support
+    // TODO conver to tree  used in the web request app.post('/api/customer/genpicode', checkSessionBeforeExec(userController.genPiCode) ); // basic support
 
     // This URL ends the session of a user
     // Expects nothing
@@ -109,7 +112,5 @@ module.exports = function(app) {
     // Expect a number with the sensor code at the end of the url
     // Returns a JSON of this form hasErrors: false, messages: [0], data: [ { sdatavalue: "12", sdatarecordeddate: "2014-04-07T21:50:52.974Z" }, { sdatavalue: "21", sdatarecordeddate: "2014-04-07T21:50:52.974Z" } ] }
     app.get('/api/get/temperature/data/:sensorId', sensorController.getTemperatureData);
-
-    // TODO implement app.get('/api/customer/get/summary/data', userController.getDataSummaryForUser);
 }
 

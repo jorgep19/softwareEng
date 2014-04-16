@@ -70,6 +70,11 @@ var constructor = function() {
         res.render('dashboard');
     };
 
+
+    webRequestControllerInstance.getUserDataSummary = function(req, res) {
+        // TODO IMPLEMENT
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     // Add pi method
     // -----------------------------------------------------------------------------------------------------------------

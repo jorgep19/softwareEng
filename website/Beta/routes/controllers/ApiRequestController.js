@@ -21,6 +21,14 @@ var constructor = function() {
         });
     };
 
+    ApiRequestControllerInstance.getUserDataSummary = function(req, res) {
+        var result = { hasErrors: false, messages: [] };
+
+        userController.getDataSummaryForUser(req.body.userId, result, function(responseResult) {
+            res.json(responseResult);
+        })
+    }
+
     return ApiRequestControllerInstance;
 };
 
