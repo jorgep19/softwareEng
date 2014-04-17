@@ -64,12 +64,46 @@ var constructor = function() {
     // -----------------------------------------------------------------------------------------------------------------
     // Dashboard page methods
     // -----------------------------------------------------------------------------------------------------------------
-
     webRequestControllerInstance.loadDashboard = function(req, res){
 
         console.log('about to load the dashboard for:' + req.session.userId);
         res.render('dashboard');
     };
+
+
+    webRequestControllerInstance.getUserDataSummary = function(req, res) {
+        // TODO IMPLEMENT
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Add pi method
+    // -----------------------------------------------------------------------------------------------------------------
+    webRequestControllerInstance.loadAppPi = function(req, res) {
+        res.render('addPi');
+    };
+
+    webRequestControllerInstance.addPiToLoggedInUser = function(req, res) {
+        var data  = req.body;
+        data.userId = req.session.userId;
+
+        piController.registerPiForUser(data, function(responseResult) {
+
+            if(responseResult.hasErrors) {
+                req.flash('signup-has-erros', 'there are errors');
+                req.flash('signup-messages', responseResult.messages);
+                res.redirect('/');
+            } else {
+                console.log(responseResult.data);
+                req.flash('new-pi-data', responseResult.data);
+                res.redirect( '/piadded');
+            }
+        });
+    };
+
+    webRequestControllerInstance.loadPiAdded = function(req, res) {
+        var data = req.flash('new-pi-data');
+        res.render('piAdded', { data: data[0] } );
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Settings page methods
