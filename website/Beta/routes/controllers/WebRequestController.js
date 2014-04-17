@@ -68,8 +68,7 @@ var constructor = function() {
         var result = { hasErrors: false, messages: [] };
 
         userController.getDataSummaryForUser(req.session.userId, result, function(responseResult) {
-
-            res.render('dashboard', { message: responseResult.messages[0] });
+            res.render('dashboard', { userData: responseResult });
         });
     };
 
