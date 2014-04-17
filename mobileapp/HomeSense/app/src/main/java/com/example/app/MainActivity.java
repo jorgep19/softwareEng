@@ -35,10 +35,44 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.BasicHttpEntity;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+
 public class MainActivity extends ActionBarActivity {
 
     public final static String LOGIN_URL = "homesense.herokuapp.com/api/login";
     public final static String TOKEN_MESSAGE = "theToken";
+
+    String userName, passWord;
+    EditText username, password;
+    String userId;
+
 
     public String TOKEN = "fuck";
     //public List<Map<String, String>> TOKEN = null;
@@ -59,8 +93,21 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        username = (EditText)findViewById(R.id.username);
+        password = (EditText)findViewById(R.id.password);
     }
 
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException{
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+
+    }
 
     /*Called for login attempt*//*
     public void loginMessage(View view){
@@ -81,128 +128,121 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void doLogin(View view) {
-        email = ((EditText) findViewById(R.id.editTextEmail))
-                .getText().toString();
-        pw = ((EditText) findViewById(R.id.editTextPassword))
-                .getText().toString();
+
+        userName = username.getText().toString();
+        passWord = password.getText().toString();
+
+
+
         //Toast.makeText(this, "doLogin called",
           //      Toast.LENGTH_SHORT).show();
-        new  Login(this).execute();
 
-        Toast.makeText(this, "Errors Found:  " + TOKEN,
-                Toast.LENGTH_SHORT).show();
 
-        if (TOKEN != null) {
+
+        String result = "";
+
+        String TAG = "MainActivity";
+        String URL = "http://homesense.herokuapp.com/api/login";
+
+        // JSONObject jo = new JSONObject();
+
+
+        // jo.put("email", userName);
+        // jo.put("password", passWord);
+
+        InputStream inputStream = null;
+
+
+
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(URL);
+
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("email", userName);
+            jsonObject.accumulate("password", passWord);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+
+           // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+            // HttpEntity entity = httpResponse.getEntity();
+
+            //String jsonString = EntityUtils.toString(entity);
+
+            // 10. convert inputstream to string
+
+            if(inputStream != null){
+                //result = EntityUtils.toString(entity);
+                result = convertInputStreamToString(inputStream);
+                JSONObject result2 = new JSONObject(result);
+                result = result2.getString("hasErrors");
+                userId = result2.getString("userId");
+            }
+            else
+                result = "true";
+
+        } catch (Exception e) {
+            //result = "0";
+
+
+            Log.d("InputStream", e.getLocalizedMessage());
+
+
+        }
+
+        if(result == "true"){
+            Toast.makeText(getApplicationContext(), "Incorrect E-mail/Password", Toast.LENGTH_LONG).show();
+        }
+        else if(result =="false"){
+
+            Toast.makeText(getApplicationContext(), "Login Successful!" , Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, HomeScreen.class);
             intent.putExtra(TOKEN_MESSAGE, TOKEN);
             startActivity(intent);
+
         }
-    }
+		/*
+		 *  From here on do whatever you want with your JSONObject, e.g.
+		 *  1) Get the value for a key: jsonObjRecv.get("key");
+		 *  2) Get a nested JSONObject: jsonObjRecv.getJSONObject("key")
+		 *  3) Get a nested JSONArray: jsonObjRecv.getJSONArray("key")
+		 */
 
-    private class Login extends AsyncTask<Void, Void, Void> {
+    };
+}
 
-        private Context context;
 
-        public Login(Context context){
-            this.context = context;
-        }
 
         //check Internet connection.
-        private void checkInternetConnection(){
-            ConnectivityManager check = (ConnectivityManager) this.context.
-                    getSystemService(Context.CONNECTIVITY_SERVICE);
-            if (check != null){
-                NetworkInfo[] info = check.getAllNetworkInfo();
-                if (info != null)
-                    for (int i=0; i<info.length; i++)
-                        if (info[i].getState() == NetworkInfo.State.CONNECTED){
-                            Toast.makeText(context, "Internet is connected",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-            }
-            else{
-                Toast.makeText(context, "not connected to internet",
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        @Override
-        protected void onPreExecute(){
-            checkInternetConnection();
-            TOKEN = "shit";
-        }
-
-        @Override
-        protected Void doInBackground(Void... arg0 ){
-
-
-            List<NameValuePair> userInfo = new ArrayList<NameValuePair>();
-
-            String loginJson = "{ email: '" + email + "', password: '" + pw + " }";
-
-            userInfo.add(new BasicNameValuePair("theString", loginJson));
 
 
 
-            ServiceHandler sh = new ServiceHandler();
 
-            String jsonString = sh.makeServiceCall(LOGIN_URL, sh.POST, userInfo );
-
-            String hasErrors = "Cunt";
-/*
-            try{
-                JSONObject json = new JSONObject(jsonString);
-                hasErrors = json.getString("hasErrors");
-            }catch (JSONException e){
-                e.printStackTrace();
-            }
-*/
-            TOKEN = hasErrors;
-
-            //jsonToken="dummy";
-            //Once schema for response to login is available, parse JSON to get token
-            //TOKEN = jsonToken; //set value for token
-
-            return null;
-
-            /*try{
-
-                URL url = new URL(LOGIN_URL);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000);
-                conn.setConnectTimeout(15000);
-                conn.setRequestMethod("GET");
-                conn.setDoInput(true);
-                conn.connect();
-                InputStream is = conn.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "Utf-8"));
-                String data = null;
-                String webPage = "";
-                while ((data = reader.readLine()) != null){
-                    webPage += data + "\n";
-                }
-
-                //for testing
-                /*ArrayList<Map<String, String>> sensorsList = new ArrayList<Map<String, String>>();
-
-                sensorsList.add(newSensor("sensor", "Temperature 1"));
-                sensorsList.add(newSensor("sensor", "Motion 1"));
-                sensorsList.add(newSensor("sensor", "Light 1"));
-*/
-/*
-
-                TOKEN = webPage;
-                return null;
-            }catch (Exception e){
-                //TOKEN = new String("Exception: " + e.getMessage());
-                return null;
-            }*/
-        }
-/*
-        @Override
-        protected void onPostExecute(String result){
-            TOKEN = "bitch";
-        }*/
-    }
-
-}
