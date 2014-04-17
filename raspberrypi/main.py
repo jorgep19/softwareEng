@@ -3,7 +3,7 @@ import time
 import json
 import RPi.GPIO as GPIO  
 from sendEmail import sendEmail
-from Temperature import getTemperature
+#from Temperature import getTemperature
 
 
 GPIO.setmode(GPIO.BCM)
