@@ -1,6 +1,6 @@
 import requests
 import json
-from update import updateSensors
+#from update import updateSensors
 
 url = "http://homesense.herokuapp.com/api/pi/verify"
 input = input("Enter code from website: ");
@@ -15,4 +15,4 @@ f.write(json.dumps(user_json["data"]))
         
 f.close()
 
-updateSensors()
+#updateSensors()
