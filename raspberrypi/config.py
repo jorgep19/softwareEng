@@ -7,8 +7,6 @@ input = input("Enter code from website: ");
 
 input_info = {"piCode":input}
 user_data = requests.post(url, data=input_info)
-# user_data = requests.urlopen(url)
-# user = json.loads(user_data.readall().decode('utf-8'))
 
 print(user_data.text)
 f = open('user.json', 'w')
