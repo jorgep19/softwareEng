@@ -1,22 +1,21 @@
 import requests
 import time
 import json
-#import RPi.GPIO as GPIO  
-#import smtplib
+import RPi.GPIO as GPIO  
 from sendEmail import sendEmail
-#from Temperature import getTemperature
+from Temperature import getTemperature
 
 
-#GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BCM)
 
 def motion(channel): 
         sendEmail(); 
         print ("MOTION DETECTED")
     
 # PIN SETUP
-#GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-#GPIO.setup(4, GPIO.IN) 
-#GPIO.add_event_detect(17, GPIO.FALLING, callback=motion)  
+GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(4, GPIO.IN) 
+GPIO.add_event_detect(17, GPIO.FALLING, callback=motion)  
 	
 timestamp = time.strftime("%Y-%m-%d-%H-%M-%S")
 user_obj=open('user.json').read()
