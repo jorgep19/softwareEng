@@ -5,9 +5,9 @@ import requests
 def updateSensors():
         url = "http://homesense.herokuapp.com/api/pi/update"
         jsonstr = open('user.json').read()
-        users = json.loads(jsonstr)
-        jdata = {'piId':users['piId'], 'userId':users['userId']}
-        print(json.dumps(users))
+        user = json.loads(jsonstr)
+        jdata = {'piId':user['piId'], 'userId':user['userId']}
+        print(json.dumps(user))
         
         sensor_data = requests.post(url, data=jdata)
         sensor_json= sensor_data.json();

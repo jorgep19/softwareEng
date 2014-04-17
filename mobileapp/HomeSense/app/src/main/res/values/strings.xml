@@ -10,4 +10,11 @@
     <string name="title_activity_data2">Data2</string>
     <string name="title_activity_home_screen_lv">HomeScreenLV</string>
 
+
+
+    <string name="login_title">HomeSense Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+
 </resources>
