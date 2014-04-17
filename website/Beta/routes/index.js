@@ -38,6 +38,9 @@ module.exports = function(app) {
     app.post('/addpi', checkSessionBeforeExec(webRequestController.addPiToLoggedInUser));
     app.get('/piadded', checkSessionBeforeExec(webRequestController.loadPiAdded));
 
+    // temperature detail
+    app.get('/sensor/Temperature/:sensorId', checkSessionBeforeExec(webRequestController.loadTemperatureDetail));
+
     // logout
     app.get('/logout', checkSessionBeforeExec(webRequestController.logout));
 
@@ -68,7 +71,7 @@ module.exports = function(app) {
     // CLIENTS API ROUTES
     // -------------------------------------------------------------------------------------
     // This URL creates a user account if possible
-    // Expects a JSON of this form: { email: 'dummie@foo.bar', password: '123', passwordRetype: '123' }
+    // Expects a JSON of this form: { email: 'dummie@foo.bar', password: '123', passwordRetype: '123', phone: 7869706084 }
     // Returns a JSON of this form: { hasErrors: false, messages: [] }
     // in that JSON hasErrors is a boolean that states if there was an error
     // and messages is an array of string that has either error messages

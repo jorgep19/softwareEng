@@ -1,3 +1,4 @@
+import json
 import picamera
 import smtplib
 from email.mime.text import MIMEText
@@ -7,21 +8,34 @@ from email.mime.multipart import MIMEMultipart
 
 
 def sendEmail():
-    TO = '7869706084@tmomail.net'        
+    jsonstr = open('user.json').read()
+    user = json.loads(jsonstr)
+    carriers=['@messaging.sprintpcs.com',
+		'@vtext.com',
+		'@tmomail.net',
+		'@txt.att.net',
+		'@mymetropcs.com'
+    ]
+    recipients=[]
+    for carrier in carriers:
+        recipients.append(user['userPhoneNumber']+carrier)
+    
+    recipients.append(user['userEmail'])
+    print(recipients)
     SUBJECT = 'Intrusion Detection'
     TEXT = 'Motion has been activated.'
-    
+
     # Gmail Sign In
     gmail_sender = 'HomesenseTechnology@gmail.com'
     gmail_passwd = 'HomesenseTechnology1'
 
     msg= MIMEMultipart()
     msg['Subject']='Invasion'
-    msg['TO']=TO
+    msg['TO'] = ", ".join(recipients)
     msg['FROM']=gmail_sender
 
     camera=picamera.PiCamera()
-    camera.capture('image.jpg', quality=10)
+    camera.capture('image.jpg', quality=5)
 
     fp=open('image.jpg','rb')
     
@@ -36,10 +50,8 @@ def sendEmail():
     server.starttls()
     server.login(gmail_sender, gmail_passwd)
     
-    BODY = '\r\n'.join(['To: %s' % TO,
-                        'From: %s' % gmail_sender,
-                        'Subject: %s' % SUBJECT,
-                        '', TEXT])
+ 
+ 
     try:
         server.send_message(msg)
         print ('email sent')
