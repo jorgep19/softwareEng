@@ -36,12 +36,16 @@ public class HomeScreen extends ActionBarActivity {
     }
 
     public void doMotion(View view) {
+        TOKEN=  jsonString;
         Intent intent = new Intent(this, Data2.class);
         intent.putExtra(TOKEN_MESSAGE, TOKEN);
         startActivity(intent);
     }
 
-
+    String jsonString = "{\"hasErrors\": false,\"messages\": [],\"data\": " +
+            "[{\"sdatavalue\": \"10\",\"sdatarecordeddate\": \"2014-04-13T12:08:34.000Z\"}," +
+            "{\"sdatavalue\": \"15\",\"sdatarecordeddate\": \"2014-04-13T12:08:34.000Z\"}," +
+            "{\"sdatavalue\": \"20\",\"sdatarecordeddate\": \"2014-04-13T11:44:06.000Z\"},]}";
 
 }
 

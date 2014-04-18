@@ -51,7 +51,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.app.HomeScreen" />
         </activity>
-
         <activity
             android:name="com.example.app.Temperature"
             android:label="@string/title_activity_temperature"
@@ -60,7 +59,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.app.PiScreen" />
         </activity>
-
         <activity
             android:name="com.example.app.PiScreen"
             android:label="@string/title_activity_pi_screen"
@@ -68,6 +66,22 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.app.Luminosity"
+            android:label="@string/title_activity_luminosity"
+            android:parentActivityName="com.example.app.HomeScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="HomeScreen" />
+        </activity>
+        <activity
+            android:name="com.example.app.Motion"
+            android:label="@string/title_activity_motion"
+            android:parentActivityName="com.example.app.HomeScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="HomeScreen" />
         </activity>
     </application>
 

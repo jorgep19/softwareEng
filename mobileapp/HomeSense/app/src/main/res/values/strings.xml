@@ -18,5 +18,7 @@
     <string name="title_activity_temperature">Temperature</string>
     <string name="title_activity_main_activity2">MainActivity</string>
     <string name="title_activity_pi_screen">PiScreen</string>
+    <string name="title_activity_luminosity">Luminosity</string>
+    <string name="title_activity_motion">Motion</string>
 
 </resources>
