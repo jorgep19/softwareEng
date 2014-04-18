@@ -4,7 +4,8 @@ import json
 import RPi.GPIO as GPIO  
 from sendEmail import sendEmail
 #from Temperature import getTemperature
-
+os.system('modprobe w1-gpio')
+os.system('modprobe w1-therm')
 
 GPIO.setmode(GPIO.BCM)
 
