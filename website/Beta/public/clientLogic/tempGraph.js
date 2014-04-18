@@ -43,18 +43,6 @@ $(function() {
     // Set up the control widget
 
     var updateInterval = 30;
-    $("#updateInterval").val(updateInterval).change(function () {
-        var v = $(this).val();
-        if (v && !isNaN(+v)) {
-            updateInterval = +v;
-            if (updateInterval < 1) {
-                updateInterval = 1;
-            } else if (updateInterval > 2000) {
-                updateInterval = 2000;
-            }
-            $(this).val("" + updateInterval);
-        }
-    });
 
     var plot = $.plot("#placeholder", [ getRandomData() ], {
         series: {
