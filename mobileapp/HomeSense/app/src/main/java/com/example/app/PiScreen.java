@@ -156,10 +156,10 @@ public class PiScreen extends ActionBarActivity {
 
 
         }
-
-
+int i = 1;
+while(i==1){
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-
+}
 
 		/*
 		 *  From here on do whatever you want with your JSONObject, e.g.
