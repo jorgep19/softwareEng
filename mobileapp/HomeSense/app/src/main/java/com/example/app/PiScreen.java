@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -75,6 +76,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class PiScreen extends ActionBarActivity {
+
+    String temp2 = "";
+    String temp3 = "";
+    String temp5 = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,12 +146,44 @@ public class PiScreen extends ActionBarActivity {
             if(inputStream != null){
                 //result = EntityUtils.toString(entity);
                 result = convertInputStreamToString(inputStream);
+
+                JSONObject result2 = new JSONObject(result);
+                JSONArray result3 = new JSONArray();
+                result3 = result2.getJSONArray("data");
+                JSONArray result4 = new JSONArray();
+               // result4 = result3.getJSONArray(1);
+
                 //JSONObject result2 = new JSONObject(result);
                 //result = result2.getString("hasErrors");
                 //userId = result2.getString("userId");
+               JSONObject temp = new JSONObject();
+
+
+                temp = result3.getJSONObject(0);
+
+                JSONArray result6 = new JSONArray();
+                result6 = temp.getJSONArray("sensorsReadings");
+
+                JSONObject temp7 = new JSONObject();
+                temp7 = result6.getJSONObject(0);
+                String temp8 = temp7.getString("type");  //SENSOR TYPE
+
+
+                String temp9 = temp7.getString("id"); //SENSOR ID
+
+               temp2 = temp.getString("sensorsReadings");
+                temp3 = temp.getString("desc"); //PI NAME
+
+                //JSONObject temp4 = new JSONObject(temp2);
+               // temp5 = temp4.getString("id");
+
+                Toast.makeText(getApplicationContext(), temp9 + " " + temp8, Toast.LENGTH_LONG).show();
             }
             else
                 result = "0";
+
+
+
 
         } catch (Exception e) {
 
@@ -156,10 +193,9 @@ public class PiScreen extends ActionBarActivity {
 
 
         }
-int i = 1;
-while(i==1){
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-}
+
+
+
 
 		/*
 		 *  From here on do whatever you want with your JSONObject, e.g.
