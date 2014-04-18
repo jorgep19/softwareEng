@@ -22,10 +22,10 @@
         <activity
             android:name="com.example.app.HomeScreen"
             android:label="@string/title_activity_home_screen"
-            android:parentActivityName="com.example.app.MainActivity" >
+            android:parentActivityName="com.example.app.PiScreen" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.app.MainActivity" />
+                android:value="com.example.app.PiScreen" />
         </activity>
         <activity
             android:name="com.example.app.PWRec"
@@ -51,13 +51,23 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.app.HomeScreen" />
         </activity>
+
         <activity
-            android:name="com.example.app.HomeScreenLV"
-            android:label="@string/title_activity_home_screen_lv"
+            android:name="com.example.app.Temperature"
+            android:label="@string/title_activity_temperature"
+            android:parentActivityName="com.example.app.PiScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.app.PiScreen" />
+        </activity>
+
+        <activity
+            android:name="com.example.app.PiScreen"
+            android:label="@string/title_activity_pi_screen"
             android:parentActivityName="com.example.app.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.app.MainActivity" />
+                android:value="MainActivity" />
         </activity>
     </application>
 

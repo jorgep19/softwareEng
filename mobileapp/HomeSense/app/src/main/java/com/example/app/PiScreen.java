@@ -1,5 +1,15 @@
 package com.example.app;
 
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.os.Build;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -64,76 +74,24 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MainActivity extends ActionBarActivity {
-
-    public final static String LOGIN_URL = "homesense.herokuapp.com/api/login";
-    public final static String TOKEN_MESSAGE = "theToken";
-
-    String userName, passWord;
-    EditText username, password;
-
-
-
-   public static String userId;
-
-    //for testing
-    private HashMap<String, String> newSensor(String key, String name){
-        HashMap<String,String> sensor = new HashMap<String, String>();
-        sensor.put(key, name);
-
-        return sensor;
-    }
-
-
+public class PiScreen extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        username = (EditText)findViewById(R.id.username);
-        password = (EditText)findViewById(R.id.password);
-    }
+        setContentView(R.layout.activity_pi_screen);
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException{
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-
+        getPis();
     }
 
 
 
-    public void doLogin(View view) {
 
-        userName = username.getText().toString();
-        passWord = password.getText().toString();
+    public void getPis(){
 
-
-
-        //Toast.makeText(this, "doLogin called",
-          //      Toast.LENGTH_SHORT).show();
-
-
-
-        String result = "";
-
-        String TAG = "MainActivity";
-        String URL = "http://homesense.herokuapp.com/api/login";
-
-        // JSONObject jo = new JSONObject();
-
-
-        // jo.put("email", userName);
-        // jo.put("password", passWord);
-
-        InputStream inputStream = null;
-
-
+    InputStream inputStream = null;
+    String URL = "http://homesense.herokuapp.com/api/customer/get/summary/data";
+    String result = "";
 
         try {
             // 1. create HttpClient
@@ -146,14 +104,14 @@ public class MainActivity extends ActionBarActivity {
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("email", userName);
-            jsonObject.accumulate("password", passWord);
+            jsonObject.accumulate("userId", MainActivity.userId);
+
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
 
 
-           // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
             // ObjectMapper mapper = new ObjectMapper();
             // json = mapper.writeValueAsString(person);
 
@@ -183,15 +141,15 @@ public class MainActivity extends ActionBarActivity {
             if(inputStream != null){
                 //result = EntityUtils.toString(entity);
                 result = convertInputStreamToString(inputStream);
-                JSONObject result2 = new JSONObject(result);
-                result = result2.getString("hasErrors");
-                userId = result2.getString("userId");
+                //JSONObject result2 = new JSONObject(result);
+                //result = result2.getString("hasErrors");
+                //userId = result2.getString("userId");
             }
             else
-                result = "true";
+                result = "0";
 
         } catch (Exception e) {
-            //result = "0";
+
 
 
             Log.d("InputStream", e.getLocalizedMessage());
@@ -199,17 +157,10 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
-        if(result == "true"){
-            Toast.makeText(getApplicationContext(), "Incorrect E-mail/Password", Toast.LENGTH_LONG).show();
-        }
-        else if(result =="false"){
 
-            Toast.makeText(getApplicationContext(), "Login Successful! " + userId, Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, PiScreen.class);
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
-            startActivity(intent);
 
-        }
 		/*
 		 *  From here on do whatever you want with your JSONObject, e.g.
 		 *  1) Get the value for a key: jsonObjRecv.get("key");
@@ -217,13 +168,63 @@ public class MainActivity extends ActionBarActivity {
 		 *  3) Get a nested JSONArray: jsonObjRecv.getJSONArray("key")
 		 */
 
-    };
+
+
+
+
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.pi_screen, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+
+        public PlaceholderFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_pi_screen, container, false);
+            return rootView;
+        }
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+
+    }
+
+
+
+
 }
-
-
-
-        //check Internet connection.
-
-
-
-

@@ -9,12 +9,14 @@
     <string name="title_activity_data1">Data1</string>
     <string name="title_activity_data2">Data2</string>
     <string name="title_activity_home_screen_lv">HomeScreenLV</string>
-
-
-
     <string name="login_title">HomeSense Login</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="edit_username">Enter Email</string>
+    <string name="edit_password">Enter Password</string>
+    <string name="title_activity_temperature">Temperature</string>
+    <string name="title_activity_main_activity2">MainActivity</string>
+    <string name="title_activity_pi_screen">PiScreen</string>
 
 </resources>

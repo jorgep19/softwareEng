@@ -26,16 +26,11 @@ public class HomeScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-        Intent intent = getIntent();
-        TOKEN = intent.getStringExtra(MainActivity.TOKEN_MESSAGE);
 
-        // used for testing. delete before final
-        TextView test = (TextView) findViewById(R.id.test);
-        test.setText(TOKEN);
     }
 
     public void doTemp(View view) {
-        Intent intent = new Intent(this, Data1.class);
+        Intent intent = new Intent(this, Temperature.class);
         intent.putExtra(TOKEN_MESSAGE, TOKEN);
         startActivity(intent);
     }

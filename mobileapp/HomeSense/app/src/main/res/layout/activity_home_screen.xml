@@ -4,18 +4,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity = "center"
     tools:context="com.example.app.HomeScreen"
     tools:ignore="MergeRootFrame" >
 
     <TextView
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Select a sensor"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        />
+
 
     <Button
-        android:layout_width="fill_parent"
+    android:layout_weight="1"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:text="Temperature"
+    android:id="@+id/buttonTemp"
+    android:onClick="doTemp"/>
+
+    <Button
+        android:layout_weight="1"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Temperature"
+        android:text="Motion"
+        android:id="@+id/buttonMotion" />
+
+    <Button
+        android:layout_weight="1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Luminosity"
         android:id="@+id/buttonTemp"
         android:onClick="doTemp"/>
 
@@ -31,9 +54,5 @@
         android:text="Light"
         android:id="@+id/buttonLight" />
 -->
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Motion"
-        android:id="@+id/buttonMotion" />
+
 </LinearLayout>
