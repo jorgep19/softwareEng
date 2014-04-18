@@ -26,7 +26,7 @@ GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(4, GPIO.IN) 
 GPIO.add_event_detect(17, GPIO.FALLING, callback=motion)  
 	
-timestamp = time.strftime("%Y-%m-%d-%H-%M-%S")
+timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
 user_obj=open('user.json').read()
 sensor_obj=open('sensors.json').read()
 
