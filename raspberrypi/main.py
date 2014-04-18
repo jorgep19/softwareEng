@@ -13,7 +13,7 @@ def motion(channel):
         print ("MOTION DETECTED")
  
 def getTemperature():
-	tfile = open("/sys/bus/w1/devices/w1_bus_master1/10-000802824e58/w1_slave")
+	tfile = open("/sys/bus/w1/devices/w1_bus_master1/28-000005947dc5/w1_slave")
 	text = tfile.read()
 	tfile.close()
 	temperature_data = text.split()[-1]
