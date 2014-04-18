@@ -6,35 +6,38 @@ $(function() {
     // We use an inline data source in the example, usually data would
     // be fetched from a server
 
-    var data = [],
-        totalPoints = 300;
+    var data = [];
 
     function getRandomData() {
+
 
         if (data.length > 0)
             data = data.slice(1);
 
-        // Do a random walk
+        function parseData(json){
+            for (var i = 0; i < json.data.length; i++) {
+                var year = parseInt(json.data[i].sdatarecordeddate.substring(0,4));
+                var month = parseInt(json.data[i].sdatarecordeddate.substring(5,7));
+                var day = parseInt(json.data[i].sdatarecordeddate.substring(8,10));
+                var hour = parseInt(json.data[i].sdatarecordeddate.substring(11,13));
+                var min = parseInt(json.data[i].sdatarecordeddate.substring(14,16));
+                var second = parseInt(json.data[i].sdatarecordeddate.substring(17,19));
 
-        while (data.length < totalPoints) {
-
-            var prev = data.length > 0 ? data[data.length - 1] : 50,
-                y = prev + Math.random() * 10 - 5;
-
-            if (y < 0) {
-                y = 0;
-            } else if (y > 100) {
-                y = 100;
+                data.push([Date.UTC(year, month, day, hour, min, second), json.data[i].sdatavalue]);
             }
 
-            data.push(y);
         }
 
-        // Zip the generated y values with the x values
+        var sensor = document.URL.split('/')[5];
+        $.ajax({
+            url: '/api/get/temperature/data/' + sensor,
+            method: "GET",
+            success: parseData
+        });
 
         var res = [];
         for (var i = 0; i < data.length; ++i) {
-            res.push([i, data[i]])
+            res.push(data[i])
         }
 
         return res;
@@ -45,6 +48,7 @@ $(function() {
     var updateInterval = 30;
 
     var plot = $.plot("#placeholder", [ getRandomData() ], {
+        color: 1,
         series: {
             shadowSize: 0	// Drawing is faster without shadows
         },
@@ -53,7 +57,8 @@ $(function() {
             max: 100
         },
         xaxis: {
-            show: false
+            mode: "time",
+            timezone: "browser"
         }
     });
 
@@ -61,7 +66,7 @@ $(function() {
 
         plot.setData([getRandomData()]);
 
-        // Since the axes don't change, we don't need to call plot.setupGrid()
+        plot.setupGrid()
 
         plot.draw();
         setTimeout(update, updateInterval);
