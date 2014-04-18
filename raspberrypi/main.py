@@ -7,6 +7,9 @@ from sendEmail import sendEmail
 
 
 GPIO.setmode(GPIO.BCM)
+GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(4, GPIO.IN) 
+GPIO.add_event_detect(17, GPIO.FALLING, callback=motion)  
 
 def motion(channel): 
         sendEmail(); 
@@ -20,11 +23,6 @@ def getTemperature():
 	temperature = float(temperature_data[2:])
 	temperature = temperature / 1000 *9.0 /5.0 +32
 	return temperature
-	
-# PIN SETUP
-GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(4, GPIO.IN) 
-GPIO.add_event_detect(17, GPIO.FALLING, callback=motion)  
 	
 timestamp = time.strftime("%Y-%m-%d-%H-%M-%S")
 user_obj=open('user.json').read()
