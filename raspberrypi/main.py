@@ -33,20 +33,20 @@ user = json.loads(user_obj)
 sensors = json.loads(sensor_obj)
 
 
-
-url = "http://homesense.herokuapp.com/api/sensor/put/data/"
-sensors_data=[]
-for sensor in sensors:
-        print(sensor)
-        sensors_data.append({'sensId': sensor['sensid'], 'value': getTemperature(),'date':timestamp})
-        print(sensors_data)
-
-
-headers= {'content-type':'application/json'}
-sent_data = {'userId':user['userId'], 'sensors':sensors_data}
-print(sent_data)
-response = requests.post(url, data=json.dumps(sent_data),headers=headers)
-print(response.text)
+while True:
+	
+	url = "http://homesense.herokuapp.com/api/sensor/put/data/"
+	sensors_data=[]
+	for sensor in sensors:
+	        print(sensor)
+	        sensors_data.append({'sensId': sensor['sensid'], 'value': getTemperature(),'date':timestamp})
+	        print(sensors_data)
+	headers= {'content-type':'application/json'}
+	sent_data = {'userId':user['userId'], 'sensors':sensors_data}
+	print(sent_data)
+	response = requests.post(url, data=json.dumps(sent_data),headers=headers)
+	print(response.text)
+	time.sleep(5)
 
 
 
